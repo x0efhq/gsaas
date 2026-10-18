@@ -11,7 +11,7 @@ All settings come from environment variables, read in `platform/config/config.go
 
 | Area | Variables |
 | --- | --- |
-| Server | `APP_ENV`, `PORT`, `SHUTDOWN_TIMEOUT`, `MAX_BODY_BYTES`, `CORS_ALLOWED_ORIGINS`, `AUTH_RATE_LIMIT`, `TRUST_PROXY` (default false), `APP_BASE_URL`, `APP_NAME` |
+| Server | `APP_ENV`, `PORT`, `SHUTDOWN_TIMEOUT`, `MAX_BODY_BYTES`, `CORS_ALLOWED_ORIGINS`, `AUTH_RATE_LIMIT`, `API_RATE_LIMIT` (default 300), `TRUST_PROXY` (default false), `APP_BASE_URL`, `APP_NAME` |
 | Worker | `WORKER_SHUTDOWN_TIMEOUT` (default 10s) |
 | Database | `DATABASE_URL` (required) |
 | Local auth | `JWT_SECRET`, `ACCESS_TTL`, `REFRESH_TTL`, `MAGIC_LINK_TTL`, `MAGIC_LINK_HOURLY_LIMIT` (default 5), `INVITE_TTL` |
@@ -33,6 +33,8 @@ Outside local development (`APP_ENV` other than `local`):
 
 - The server refuses to start unless `JWT_SECRET` is set to a random value of at least 32 bytes, for example `openssl rand -hex 32`. The built-in default is for local use only.
 - Responses carry `Strict-Transport-Security`, so serve the API over HTTPS.
+
+`API_RATE_LIMIT` is requests per minute on authenticated routes, counted per API key, else per signed-in user, else per IP. `AUTH_RATE_LIMIT` is requests per minute per IP on the public `/auth` and `/invites/accept` routes. Over either limit the API answers 429 with a `Retry-After` header.
 
 `TRUST_PROXY=true` takes the client IP, used for rate limits and logs, from the right-most `X-Forwarded-For` entry: the address your proxy saw and appended. Set it only when exactly one proxy or load balancer sits in front of the API and appends to `X-Forwarded-For`; otherwise clients can fake their IP and get around rate limits. Entries further left come from the client and are ignored.
 

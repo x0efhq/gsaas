@@ -33,4 +33,5 @@ Route groups at a glance:
 
 - Send `Authorization: Bearer <token>`, and `X-Org-ID` on tenant routes without `{orgID}`.
 - Responses are `{"object", "data"}`. Lists add `has_more` and `starting_after` for pagination.
+- Authenticated routes are rate limited per API key, else per user, else per IP (`API_RATE_LIMIT`); over the limit you get 429 with `Retry-After`.
 - Errors are `{"object": "error", "error": {"type", "message"}}` with a matching HTTP status.
