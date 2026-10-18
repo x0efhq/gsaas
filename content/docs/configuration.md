@@ -34,7 +34,7 @@ Outside local development (`APP_ENV` other than `local`):
 - The server refuses to start unless `JWT_SECRET` is set to a random value of at least 32 bytes, for example `openssl rand -hex 32`. The built-in default is for local use only.
 - Responses carry `Strict-Transport-Security`, so serve the API over HTTPS.
 
-`TRUST_PROXY=true` takes the client IP, used for rate limits and logs, from the `X-Real-IP` or `X-Forwarded-For` header. Set it only behind a proxy or load balancer that overwrites those headers; otherwise clients can fake their IP and get around rate limits.
+`TRUST_PROXY=true` takes the client IP, used for rate limits and logs, from the right-most `X-Forwarded-For` entry: the address your proxy saw and appended. Set it only when exactly one proxy or load balancer sits in front of the API and appends to `X-Forwarded-For`; otherwise clients can fake their IP and get around rate limits. Entries further left come from the client and are ignored.
 
 `FRONTEND_BASE_URL` is where emailed sign-in and invite links and Stripe redirects land; empty uses `APP_BASE_URL`. See [Emailed links]({{< relref "authentication#emailed-links" >}}).
 

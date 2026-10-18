@@ -29,7 +29,7 @@ Your deployment needs:
 - The worker running as a separate process next to the API
 - Production settings: `APP_ENV=production` (anything but `local`), your own `JWT_SECRET` (at least 32 random bytes; the server won't start without it), `APP_BASE_URL`, and any Stripe, SMTP and S3 variables you use. See [Configuration]({{< relref "configuration" >}}).
 - HTTPS in front of the API. Outside local, responses carry `Strict-Transport-Security`.
-- Behind a proxy or load balancer, `TRUST_PROXY=true` so rate limits see real client IPs. Only if the proxy overwrites `X-Forwarded-For` / `X-Real-IP`.
+- Behind one proxy or load balancer, `TRUST_PROXY=true` so rate limits see real client IPs. Only if exactly one proxy sits in front and appends to `X-Forwarded-For`.
 
 Never set `WEBHOOK_ALLOW_INSECURE` in production.
 
