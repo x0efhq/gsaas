@@ -26,7 +26,7 @@ gsaas/
 ├── webhooks/       outbound webhooks
 ├── files/          file uploads
 ├── jobs/           job status, list and cancel API
-├── platform/       shared helpers: auth, config, email, events, httpx, queue, log
+├── platform/       shared helpers: auth, config, email, events, httpx, jobs, log
 ├── adapters/       Postgres, Stripe, Supabase, job queue, S3 storage
 ├── database/       migrations, SQL queries, generated sqlc code
 └── cmd/            server, worker, migrate, seed

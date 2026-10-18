@@ -44,5 +44,5 @@ CI (`.github/workflows/check.yml`) installs sqlc v1.30.0 and runs `make check` o
 
 ## Test helpers
 
-- `queue.NewMem()` records enqueued jobs instead of running them.
+- `jobs.NewMem()` records enqueued jobs instead of running them.
 - `events.NewMem` is an in-memory event bus.
