@@ -74,7 +74,7 @@ ok := hmac.Equal([]byte("v1="+hex.EncodeToString(mac.Sum(nil))), []byte(sig))
 
 - A non-2xx response, a timeout (10 s) or a redirect counts as a failure, and the delivery is retried with backoff.
 - Each delivery's latest status, attempt count and last error are stored per endpoint and event.
-- Deliveries to private, loopback and link-local addresses (including cloud metadata) are blocked.
+- Deliveries go only to public addresses, checked after DNS resolution. Private, loopback, link-local, carrier-grade NAT (`100.64.0.0/10`), multicast and other reserved ranges, including cloud metadata addresses, are blocked, and a blocked delivery isn't retried. Creating an endpoint with such an IP address in its URL gets 400.
 - For local development, set `WEBHOOK_ALLOW_INSECURE=true` to allow `http://` and localhost receivers. Never set it in production.
 
 ## Adding your own event
