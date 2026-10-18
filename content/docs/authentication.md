@@ -109,5 +109,5 @@ A key can only reach its own organization. Some routes need a signed-in user and
 | Route | Purpose |
 | --- | --- |
 | `GET`, `PATCH`, `DELETE /me` | Read, update or delete your account |
-| `GET /users` | List users (platform admins only) |
+| `GET /users` | List users (platform admins only, `platform:users:list`) |
 | `GET`, `PATCH /users/{id}` | Read or update a user |

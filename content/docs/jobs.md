@@ -117,7 +117,7 @@ return fmt.Errorf("bad payload: %w", worker.ErrPermanent)
 
 The routes are scoped to an organization. System jobs, enqueued without an organization, aren't listed.
 
-A job's `status` is one of `queued`, `running`, `succeeded`, `failed` or `canceled`. Waiting and retrying jobs show as `queued`.
+A job's `name` is the job name it was enqueued with, such as `projects.apply`. Its `status` is one of `queued`, `running`, `succeeded`, `failed` or `canceled`. Waiting and retrying jobs show as `queued`.
 
 Canceling a queued job stops it at once. Canceling a running job cancels its `ctx`; the response is `202` and may still show `running` until the handler returns.
 
