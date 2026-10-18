@@ -27,6 +27,7 @@ Route groups at a glance:
 | `/organizations/{orgID}/webhooks` | user or API key | [Webhooks]({{< relref "webhooks" >}}) |
 | `/projects` | user or API key, tenant | [Project structure]({{< relref "project-structure" >}}) |
 | `/jobs` | user or API key, tenant | [Jobs]({{< relref "jobs" >}}) |
+| `/admin` | platform admin user | [Platform admin]({{< relref "admin" >}}) |
 | `/webhooks/stripe` | Stripe signature | [Billing]({{< relref "billing" >}}) |
 
 ## Conventions
