@@ -49,6 +49,7 @@ so send no `X-Org-ID`. Others get 403.
 - **organizations**: team organizations only; personal workspaces match users one to one.
 - **subscriptions**: every status is present, zero when unused.
 - **webhooks**: deliveries created in the last 24 hours, and how many succeeded.
-- **jobs**: jobs of every organization, system jobs included, that used up their retries
-  (status `failed`) in the last 24 hours. Jobs stopped with `worker.ErrPermanent` end
+- **jobs**: jobs of every organization, system jobs included, created in the last 24
+  hours and now `failed` (out of retries). A job created earlier that fails today isn't
+  counted. Jobs stopped with `worker.ErrPermanent` end
   `canceled` and aren't counted.
