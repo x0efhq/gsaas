@@ -13,7 +13,7 @@ An organization (org) is a tenant: an account whose data is kept separate from e
 
 | Action | viewer | member | admin | owner |
 | --- | --- | --- | --- | --- |
-| Read the org, list and read projects | ✓ | ✓ | ✓ | ✓ |
+| Read the org (`org:read`), list and read projects (`projects:read`) | ✓ | ✓ | ✓ | ✓ |
 | List members | ✓ | ✓ | ✓ | ✓ |
 | Leave the org | ✓ | ✓ | ✓ | ✗ |
 | List and read jobs | ✗ | ✓ | ✓ | ✓ |
@@ -66,7 +66,7 @@ Both return 401 when there is no caller and 403 when the caller lacks the permis
 | --- | --- |
 | `GET /me/organizations` | List the orgs you belong to, with your role in each (user only) |
 | `POST /organizations` | Create an organization |
-| `GET /organizations/{orgID}` | Read it |
+| `GET /organizations/{orgID}` | Read it (`org:read`) |
 | `PATCH /organizations/{orgID}` | Update it (`org:update`) |
 | `DELETE /organizations/{orgID}` | Delete it (owners only) |
 
