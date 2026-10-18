@@ -94,7 +94,7 @@ To change how often a job runs, change its `Every`.
 - **Payload.** The payload is raw bytes. Built-in jobs encode it as JSON or a plain ID string.
 - **Organization.** The org argument to `Enqueue` decides which organization's jobs API shows the job. A job enqueued with `uuid.Nil` is a system job and isn't listed. `billing.process_webhook` and `identity.expire_sessions` are system jobs.
 - **Retries.** A handler that returns an error is retried. The default is 25 attempts, unless `queue.Opts{MaxAttempts: ...}` sets fewer. The delay grows with each attempt (about attempt⁴ seconds, plus some randomness).
-- **Failed jobs.** After the last attempt the job's status becomes `failed`. Its last error is in the `error` field of `GET /jobs/{id}`.
+- **Failed jobs.** After the last attempt the job's status becomes `failed`. Once any attempt fails, the `error` field of `GET /jobs/{id}` says so, without the error text, which can hold internal detail. The real error is in the worker log.
 - **Permanent errors.** Wrap `queue.ErrPermanent` to stop retries, for input that will never succeed. The job ends as `canceled`, not `failed`.
 
 ```go
