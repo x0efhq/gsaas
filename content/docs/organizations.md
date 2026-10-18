@@ -14,17 +14,20 @@ An organization (org) is a tenant: an account whose data is kept separate from e
 | Action | viewer | member | admin | owner |
 | --- | --- | --- | --- | --- |
 | Read the org, list and read projects | ✓ | ✓ | ✓ | ✓ |
+| List members | ✓ | ✓ | ✓ | ✓ |
+| Leave the org | ✓ | ✓ | ✓ | ✗ |
 | List and read jobs | ✗ | ✓ | ✓ | ✓ |
 | Cancel jobs | ✗ | ✗ | ✓ | ✓ |
 | Create, update and delete projects | ✗ | ✗ | ✓ | ✓ |
 | Update the org | ✗ | ✗ | ✓ | ✓ |
 | Manage billing | ✗ | ✗ | ✓ | ✓ |
 | Invite members, list and revoke invites | ✗ | ✗ | ✓ | ✓ |
+| Change member roles, remove members | ✗ | ✗ | ✓ | ✓ |
 | Manage API keys | ✗ | ✗ | ✓ | ✓ |
 | Manage webhooks | ✗ | ✗ | ✓ | ✓ |
 | Delete the org | ✗ | ✗ | ✗ | ✓ |
 
-Billing, deleting the org, invites and API keys also need a signed-in user; an API key (a secret token for server-to-server calls) can't use them.
+Billing, deleting the org, invites, API keys and leaving also need a signed-in user; an API key (a secret token for server-to-server calls) can't use them.
 
 ## Protecting a route
 
@@ -61,12 +64,29 @@ Both return 401 when there is no caller and 403 when the caller lacks the permis
 
 | Route | Purpose |
 | --- | --- |
+| `GET /me/organizations` | List the orgs you belong to, with your role in each (user only) |
 | `POST /organizations` | Create an organization |
 | `GET /organizations/{orgID}` | Read it |
 | `PATCH /organizations/{orgID}` | Update it (`org:update`) |
 | `DELETE /organizations/{orgID}` | Delete it (owners only) |
 
 A personal organization takes no invites and can't be deleted through this route. It is deleted with its owner's account.
+
+## Members
+
+| Route | Purpose |
+| --- | --- |
+| `GET /organizations/{orgID}/members` | List members (`org:members:read`) |
+| `PATCH /organizations/{orgID}/members/{userID}` | Change a member's role (`org:members:manage`) |
+| `DELETE /organizations/{orgID}/members/{userID}` | Remove a member (`org:members:manage`) |
+| `DELETE /organizations/{orgID}/members/me` | Leave the org (user only) |
+
+```json
+PATCH /organizations/{orgID}/members/{userID}
+{"role": "admin"}
+```
+
+Every org has exactly one owner. Nobody can be given the owner role, and the owner can't be demoted, removed or leave: those requests get 409.
 
 ## Invites
 
@@ -76,5 +96,6 @@ A personal organization takes no invites and can't be deleted through this route
 | `GET /organizations/{orgID}/invites` | List pending invites |
 | `DELETE /organizations/{orgID}/invites/{inviteID}` | Revoke an invite |
 | `POST /invites/accept` | Accept an invite |
+| `GET /invites/accept?token=...` | Confirm page for the emailed link, when you have no frontend |
 
-Invites need `org:members:invite`, can't grant the owner role, and expire after `INVITE_TTL`. The invitee gets an email with the invite link.
+Invites need `org:members:invite`, can't grant the owner role, and expire after `INVITE_TTL`. The invitee gets an email with the invite link; see [Emailed links]({{< relref "authentication#emailed-links" >}}) for what your frontend does with it. Accepting signs the invitee in.

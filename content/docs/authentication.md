@@ -26,6 +26,7 @@ The `identity` module issues and verifies session JWTs signed with `JWT_SECRET`.
 | --- | --- |
 | `POST /auth/signup` | Create an account |
 | `POST /auth/magic-link` | Email a one-time sign-in link |
+| `GET /auth/magic-link?token=...` | Confirm page for the emailed link, when you have no frontend |
 | `POST /auth/magic-link/verify` | Exchange the link token for a session |
 | `POST /auth/signin` | Sign in with email and password |
 | `POST /auth/refresh` | Get a new access token |
@@ -33,6 +34,21 @@ The `identity` module issues and verifies session JWTs signed with `JWT_SECRET`.
 | `PUT /me/password` | Set an optional password |
 
 Magic links are the default sign-in and expire after `MAGIC_LINK_TTL`. Each address gets at most `MAGIC_LINK_HOURLY_LIMIT` links per hour; extra requests still return 202 but send no email. `/auth` routes are rate limited (`AUTH_RATE_LIMIT`).
+
+## Emailed links
+
+Sign-in and invite emails carry a one-time token in a link:
+
+- With `FRONTEND_BASE_URL` set, links open your frontend: `FRONTEND_BASE_URL` + `MAGIC_LINK_PATH` (default `/auth/magic-link`) or `INVITE_ACCEPT_PATH` (default `/invites/accept`), with `?token=<token>`.
+- Without it, links open the API's own confirm page at the same paths, whose button posts the token for the user.
+
+Your frontend page must:
+
+1. Read `token` from the query string.
+2. Show a button such as "Sign in" or "Accept invite". Don't use the token on page load: email scanners and link previews open links, and would use up the one-time token before the user does.
+3. On click, `POST` `{"token": "<token>"}` to `/auth/magic-link/verify` (sign-in) or `/invites/accept` (invite). Both return a session (`access_token`, `refresh_token`, `expires_at`, `user_id`) that you store like a sign-in.
+
+A used, expired or unknown token gets 401 (sign-in) or 404 (invite); show a "link expired, request a new one" message.
 
 ## Supabase auth
 
@@ -86,7 +102,7 @@ POST /organizations/{orgID}/api-keys
 {"name": "ci", "perms": ["jobs:read", "projects:write"]}
 ```
 
-A key can only reach its own organization. Some routes need a signed-in user and return 403 for API keys: `/me`, `/users`, `/files`, `POST /organizations`, and the organization invites, API keys and billing routes.
+A key can only reach its own organization. Some routes need a signed-in user and return 403 for API keys: `/me` (including `/me/organizations`), `/users`, `/files`, `POST /organizations`, leaving an organization, and the organization invites, API keys and billing routes.
 
 ## Users
 
