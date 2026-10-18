@@ -63,7 +63,7 @@ Run gsaas locally and make your first signed-in API call in about five minutes. 
    go run ./cmd/worker
    ```
 
-   It keeps running and logs nothing more until a job runs.
+   It keeps running. It runs a cleanup job on start and every 15 minutes, then waits for jobs.
 
 5. **Sign in.**
 
@@ -87,13 +87,37 @@ Run gsaas locally and make your first signed-in API call in about five minutes. 
    {"data":{"id":"...","email":"admin@local","first_name":"Admin","last_name":"Local","is_platform_admin":true,...},"object":"user"}
    ```
 
-7. **Explore the API.** Open `http://localhost:5000/docs` for the interactive API reference.
+7. **Find your organization.** Every user has a personal org. List yours to get its ID:
+
+   ```bash
+   curl localhost:5000/me/organizations -H 'Authorization: Bearer <access_token>'
+   ```
+
+   ```json
+   {"data":[{"id":"<org_id>","name":"...","personal":true,"role":"owner","status":"active"}],"has_more":false,"object":"list","starting_after":""}
+   ```
+
+8. **Make a tenant call.** Tenant routes act on one org: `{orgID}` in the path, or the `X-Org-ID` header. Create a project in your org, then list its members:
+
+   ```bash
+   curl -X POST localhost:5000/projects \
+     -H 'Authorization: Bearer <access_token>' -H 'X-Org-ID: <org_id>' \
+     -H 'Content-Type: application/json' -d '{"name":"First project"}'
+
+   curl localhost:5000/organizations/<org_id>/members -H 'Authorization: Bearer <access_token>'
+   ```
+
+   A request for an org you don't belong to gets 403. See [Organizations & multi-tenancy]({{< relref "organizations" >}}).
+
+9. **Explore the API.** Open `http://localhost:5000/docs` for the interactive API reference.
 
 ## Good to know
 
 - Without `SMTP_HOST`, emails such as magic links are written to the server log.
 - Change the seed users with `SEED_ADMIN_*` and `SEED_MEMBER_*` in `.env`.
 - `make stop` stops the Postgres container. Data is kept in a Docker volume.
+- No Docker? Set `DATABASE_URL` in `.env` to any Postgres, then use `go run ./cmd/migrate up`, `go run ./cmd/seed` and `go run ./cmd/server` instead of the `make` targets.
+- To run everything in containers instead: `docker compose --profile app up --build`. See [Deployment]({{< relref "deployment" >}}).
 
 ## Troubleshooting
 
