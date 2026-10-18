@@ -8,9 +8,16 @@ weight: -6
 Code: `admin/`, grant in `app/rbac.go` (`platformAdminPerms`)
 
 A platform admin is you, the SaaS owner, not an org role. Users with `is_platform_admin`
-get platform perms (`platform:stats`, `platform:users:list` for `GET /users`) on their
-session. API keys never get them, even a
-key created by a platform admin, and no org role can grant them.
+get these platform perms on their session:
+
+| Perm | Allows |
+| --- | --- |
+| `platform:stats` | `GET /admin/stats` |
+| `platform:users:list` | `GET /users` |
+| `platform:users:manage` | `GET` and `PATCH /users/{id}` for any user |
+
+API keys never get them, even a key created by a platform admin, and no org role can
+grant them.
 
 ## Becoming a platform admin
 

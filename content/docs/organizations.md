@@ -55,7 +55,7 @@ The `tenant` middleware resolves the org (`{orgID}` path, else `X-Org-ID`), chec
 
 ## RequirePerm vs RequireRole
 
-- `RequirePerm(p)` allows callers holding `p`: members whose role is granted it in `app/rbac.go`, or API keys created with it. Built-in routes use it.
+- `RequirePerm(p)` allows callers holding `p`: members whose role is granted it in `app/rbac.go`, or API keys created with it. Built-in routes use it. Platform perms (`platform:stats`, `platform:users:list`, `platform:users:manage`) go only to platform admins; see [Platform admin]({{< relref "admin" >}}).
 - `RequireRole(min)` allows signed-in members ranked at or above `min` in `org.Roles`. It's a session-only shortcut for your own routes; API keys have no role, so they get 403.
 
 Both return 401 when there is no caller and 403 when the caller lacks the permission.

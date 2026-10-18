@@ -37,7 +37,7 @@ CI (`.github/workflows/check.yml`) installs sqlc v1.30.0 and runs `make check` o
 ## What the tests cover
 
 - Module tests run against the in-memory stores in each `mem.go`, so they need no database.
-- Postgres store tests in `adapters/postgres` are skipped unless `DATABASE_URL` is set in the shell. They don't run in CI.
+- Database store tests in `adapters/` are skipped unless `TEST_DATABASE_URL` is set in the shell, e.g. `TEST_DATABASE_URL=<test database URL> make check`. Point it at a disposable database, never your dev one: the tests write to it. They don't run in CI.
 - `app/imports_test.go` enforces the package import rules.
 - `app/isolation_test.go` checks that one organization can't reach another's data. It fails until every route under a tenant prefix is covered.
 - `app/openapi_test.go` fails for any mounted route missing from `app/openapi.yaml`.

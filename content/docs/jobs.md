@@ -7,7 +7,7 @@ weight: -12
 
 Code: `jobs/`, `platform/worker/`, the job queue adapter in `adapters/`, `cmd/worker/`
 
-Jobs run slow or retryable work outside the request, in a separate worker process. They are stored in Postgres, so they survive restarts and need no Redis.
+Jobs run slow or retryable work outside the request, in a separate worker process. They are stored in the database, so they survive restarts and need no extra service.
 
 **What you get**
 
