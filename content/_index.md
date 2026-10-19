@@ -1,6 +1,5 @@
 ---
 title: gsaas
-type: docs
 ---
 
 # gsaas

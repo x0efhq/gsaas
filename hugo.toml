@@ -7,6 +7,8 @@ title = "gsaas docs"
     path = "github.com/alex-shpak/hugo-book"
 
 [params]
+  # Buy button on the home page. Set to the Gumroad product URL.
+  gumroadURL = "#"
   BookTheme = "auto"
   BookSection = "docs"
   BookSearch = true

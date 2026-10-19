@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>gsaas: the Go SaaS backend</title>
+<meta name="description" content="The SaaS backend you'd otherwise spend weeks building. Sign-in, teams, permissions, Stripe billing, API keys and background jobs, in Go.">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}">
+<script>(function(){var t=localStorage.getItem("theme");if(!t||t==="auto")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}button{cursor:pointer;font:inherit}a{color:inherit}
+:root{--bg:#fafaf9;--fg:#0c0a09;--mute:#78716c;--line:#e7e5e4;--acc:#d15010;--t-bg:#1c1917;--t-fg:#e7e5e4;--t-mute:#a8a29e;--t-acc:#f2711c;--t-line:#33302d}
+[data-theme=dark]{--bg:#0d0d0d;--fg:#f5f5f5;--mute:#8a8a8a;--line:#262626;--acc:#f2711c}
+html,body{height:100dvh;overflow:hidden}
+body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;display:grid;grid-template-rows:auto 1fr auto}
+.m{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:-.015rem;color:var(--mute)}
+header,footer{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 2rem;border-bottom:1px solid var(--line)}
+footer{border-bottom:0;border-top:1px solid var(--line);flex-wrap:wrap}
+footer a,nav a{text-decoration:none}footer a:hover,nav a:hover{color:var(--fg)}
+.logo{font-weight:500;letter-spacing:-.02em;text-decoration:none}
+nav{display:flex;align-items:center;gap:1.25rem}
+#tg{background:none;border:1px solid var(--line);color:var(--mute);padding:.4rem .7rem}
+main{display:grid;grid-template-rows:1fr auto;margin:0 2rem;border-left:1px solid var(--line);border-right:1px solid var(--line);min-height:0}
+.top{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;padding:1.5rem 2rem;min-height:0}
+h1{font-weight:400;font-size:clamp(3rem,9vw,7rem);letter-spacing:-.05em;line-height:1;margin:.75rem 0 .5rem}
+.tag{font-size:1.125rem;color:var(--mute)}
+.cta{display:flex;gap:.75rem;margin-top:1.5rem}
+.btn{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.8125rem;text-decoration:none;padding:.55rem .9rem;border:1px solid var(--line)}
+.btn:hover{border-color:var(--fg)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}.btn.pri:hover{opacity:.9}
+.art{font:.8125rem/1.2 "JetBrains Mono",ui-monospace,monospace;color:var(--mute);margin-top:1.5rem}
+.art b{color:var(--acc);font-weight:400}
+.t{background:var(--t-bg);color:var(--t-fg);border:1px solid var(--t-line);border-radius:4px;padding:.9rem 1.15rem;font:.8125rem/1.7 "JetBrains Mono",ui-monospace,monospace;overflow:hidden}
+.t div{white-space:pre}
+.p{color:var(--t-acc)}.d{color:var(--t-mute)}.ok{color:#4ade80}
+.c{display:inline-block;width:.6em;height:1.1em;background:var(--t-acc);vertical-align:text-bottom;animation:b 1s steps(1) infinite}
+@keyframes b{50%{opacity:0}}
+.row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.row section{padding:1rem 1.25rem;border-left:1px solid var(--line);font-size:.8125rem;line-height:1.5}
+.row section:first-child{border-left:0}
+.row h2{margin-bottom:.4rem;font-weight:400}
+.row p{color:var(--fg)}
+.row ul{list-style:none;font:.75rem/1.55 "JetBrains Mono",ui-monospace,monospace}
+.row li::before{content:"■ ";color:var(--acc)}
+@media(max-width:900px){
+  html,body{height:auto;overflow:auto}
+  header,footer{padding:1rem}main{margin:0 1rem}
+  .top{grid-template-columns:1fr;padding:1.25rem 1rem}
+  .art{display:none}.t{font-size:.6875rem;overflow-x:auto}
+  .row{grid-template-columns:1fr}.row section{border-left:0;border-top:1px solid var(--line);padding:1rem}
+  .row section:first-child{border-top:0}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="{{ "/" | relURL }}">gsaas</a>
+  <nav class="m"><a href="{{ "docs/quickstart/" | relURL }}">Docs</a><button id="tg" class="m">Theme</button></nav>
+</header>
+<main>
+  <div class="top">
+    <div>
+      <span class="m">[ 01 ] Go SaaS backend</span>
+      <h1>gsaas</h1>
+      <p class="tag">The SaaS backend you'd otherwise spend weeks building.</p>
+      <div class="cta">
+        <a class="btn pri" href="{{ site.Params.gumroadURL | default "#" }}">Buy →</a>
+        <a class="btn" href="{{ "docs/quickstart/" | relURL }}">Read the docs →</a>
+      </div>
+<pre class="art" aria-hidden="true">
+  _              _
+ ( `.__________.' )
+  \  .--.  .--.  /
+  | | <b>()</b> || <b>()</b> | |
+  |  `--'  `--'  |
+  |     (__)     |
+  |      ||      |
+  |              |
+  `.____________.'</pre>
+    </div>
+    <div class="t" aria-label="Terminal example">
+      <div><span class="p">~$</span> ls gsaas/</div>
+      <div>app/  identity/  organization/  billing/  projects/</div>
+      <div>jobs/  files/  webhooks/  admin/  platform/  adapters/</div>
+      <div><span class="p">~$</span> make check</div>
+      <div><span class="ok">✓</span> gofmt  <span class="ok">✓</span> go vet  <span class="ok">✓</span> go test ./...  <span class="ok">✓</span> sqlc</div>
+      <div><span class="p">~$</span> curl -X POST localhost:5000/organizations \</div>
+      <div>    -H 'Authorization: Bearer …' -d '{"name":"Acme"}'</div>
+      <div><span class="d">{</span></div>
+      <div>  "object": "org",</div>
+      <div>  "data": { "name": "Acme", "slug": "acme", "personal": false }</div>
+      <div><span class="d">}</span></div>
+      <div><span class="p">~$</span> <span class="c"></span></div>
+    </div>
+  </div>
+  <div class="row">
+    <section>
+      <h2 class="m">[ 02 ] Included</h2>
+      <ul>
+        <li>Auth: password, magic link, Supabase</li>
+        <li>Teams, invites, roles + perms</li>
+        <li>Stripe billing per org</li>
+        <li>API keys, jobs, webhooks</li>
+        <li>Multi-tenant, OpenAPI 3.1</li>
+      </ul>
+    </section>
+    <section>
+      <h2 class="m">[ 03 ] Built for AI agents</h2>
+      <p>One package per feature, one place that wires it all. <code class="m">AGENTS.md</code> has the recipes; <code class="m">make check</code> says when it's done.</p>
+    </section>
+    <section>
+      <h2 class="m">[ 04 ] Saves you</h2>
+      <p>Roughly 110–175 hours of auth, teams, billing, API keys, jobs and setup. Backend only: bring your own frontend.</p>
+    </section>
+    <section>
+      <h2 class="m">[ 05 ] License</h2>
+      <p>Full source and docs. One-time payment, unlimited products of your own or for clients. No resale.</p>
+    </section>
+  </div>
+</main>
+<footer class="m">
+  <span>© 2026 X0EF</span>
+  <a href="mailto:x0efhq@gmail.com">x0efhq@gmail.com</a>
+  <span>Gopher by Renee French</span>
+  <a href="https://x0ef.github.io">x0ef.github.io ↗</a>
+</footer>
+<script>document.getElementById("tg").onclick=function(){var r=document.documentElement,t=r.dataset.theme==="dark"?"light":"dark";r.dataset.theme=t;localStorage.setItem("theme",t)}</script>
+</body>
+</html>
