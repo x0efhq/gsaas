@@ -26,8 +26,9 @@ gsaas/
 ├── webhooks/       outbound webhooks
 ├── files/          file uploads
 ├── jobs/           job status, list and cancel API
-├── platform/       shared helpers: auth, config, email, events, httpx, jobs, log
-├── adapters/       Postgres, Stripe, Supabase, job queue, S3 storage
+├── admin/          platform-wide stats for the SaaS owner
+├── platform/       shared helpers: auth, config, email, events, httpx, worker, log
+├── adapters/       database, Stripe, Supabase auth, job queue, S3 storage
 ├── database/       migrations, SQL queries, generated sqlc code
 └── cmd/            server, worker, migrate, seed
 ```
@@ -46,7 +47,7 @@ Each module (domain) is a top-level package with the same shape:
 | `mem.go` | In-memory `Store` used by tests |
 | `*_test.go` | Tests |
 
-The Postgres implementation of each store lives in `adapters/postgres/`. Only `app/` imports adapters, so swapping a provider means swapping an adapter. `app/imports_test.go` enforces these import rules.
+The database implementation of each store lives in `adapters/postgres/`. Only `app/` imports adapters, so swapping a provider means swapping an adapter. `app/imports_test.go` enforces these import rules.
 
 ## The app package
 

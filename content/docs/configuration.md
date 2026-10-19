@@ -22,6 +22,7 @@ All settings come from environment variables, read in `platform/config/config.go
 | File storage | `S3_ENDPOINT`, `S3_REGION`, `S3_PUBLIC_URL`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_PUBLIC_BUCKET`, `S3_PRIVATE_BUCKET`, `FILE_EXPIRES`, `UPLOAD_MAX_BYTES` (default 10 MiB) |
 | Outbound webhooks | `WEBHOOK_MAX_ENDPOINTS` (default 20), `WEBHOOK_ALLOW_INSECURE` (local development only) |
 | Seed users | `SEED_ADMIN_*`, `SEED_MEMBER_*` (`EMAIL`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`) |
+| Tests | `TEST_DATABASE_URL`: read by `go test` only, never by the app. See [Testing]({{< relref "testing" >}}) |
 
 Optional integrations turn on when you set their variables:
 

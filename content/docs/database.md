@@ -7,7 +7,7 @@ weight: -10
 
 Code: `database/` (migrations, queries, generated sqlc), `adapters/postgres/`, `cmd/migrate/`
 
-gsaas stores everything in Postgres. You write plain SQL: schema changes go in migration files, and queries are turned into typed Go functions by sqlc (a code generator), so there is no ORM.
+gsaas stores everything in the database. You write plain SQL: schema changes go in migration files, and queries are turned into typed Go functions by sqlc (a code generator), so there is no ORM.
 
 **What you get**
 
@@ -73,4 +73,4 @@ Scope every tenant query by `organization_id`, as above.
 
 ## Transactions
 
-A Postgres store uses the transaction in `ctx` when there is one, so several store calls and job enqueues can share one transaction. Modules that need this add `InTx(ctx, fn)` to their `Store` interface and wrap the calls in it, as `billing` and `organization` do. The Postgres store implements it with `DB.InTx`.
+A database store uses the transaction in `ctx` when there is one, so several store calls and job enqueues can share one transaction. Modules that need this add `InTx(ctx, fn)` to their `Store` interface and wrap the calls in it, as `billing` and `organization` do. The store in `adapters/postgres/` implements it with `DB.InTx`.

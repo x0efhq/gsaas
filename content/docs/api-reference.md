@@ -19,7 +19,7 @@ Route groups at a glance:
 | `/healthz`, `/readyz` | none | [Deployment]({{< relref "deployment" >}}) |
 | `/auth` | none, rate limited | [Authentication]({{< relref "authentication" >}}) |
 | `/invites/accept` | none, rate limited | [Organizations & multi-tenancy]({{< relref "organizations" >}}) |
-| `/me`, `/users` | user | [Authentication]({{< relref "authentication" >}}) |
+| `/me`, `/users` | user (`GET /users` and other users' `/users/{id}`: platform admins) | [Authentication]({{< relref "authentication" >}}) |
 | `/files` | user | [File uploads]({{< relref "files" >}}) |
 | `POST /organizations` | user | [Organizations & multi-tenancy]({{< relref "organizations" >}}) |
 | `/organizations/{orgID}` | user or API key, tenant | [Organizations & multi-tenancy]({{< relref "organizations" >}}) |
@@ -27,7 +27,7 @@ Route groups at a glance:
 | `/organizations/{orgID}/webhooks` | user or API key | [Webhooks]({{< relref "webhooks" >}}) |
 | `/projects` | user or API key, tenant | [Project structure]({{< relref "project-structure" >}}) |
 | `/jobs` | user or API key, tenant | [Jobs]({{< relref "jobs" >}}) |
-| `/admin` | platform admin user | [Platform admin]({{< relref "admin" >}}) |
+| `GET /admin/stats` | user with `platform:stats` (platform admins only) | [Platform admin]({{< relref "admin" >}}) |
 | `/webhooks/stripe` | Stripe signature | [Billing]({{< relref "billing" >}}) |
 
 ## Conventions

@@ -115,6 +115,8 @@ Run gsaas locally and make your first signed-in API call in about five minutes. 
 
 - Without `SMTP_HOST`, emails such as magic links are written to the server log.
 - Change the seed users with `SEED_ADMIN_*` and `SEED_MEMBER_*` in `.env`.
+- `admin@local` is a platform admin: it can call `GET /admin/stats`. See [Platform admin]({{< relref "admin" >}}).
+- Questions or security reports: x0efhq@gmail.com (see `SECURITY.md`). The code is under the commercial license in `LICENSE`.
 - `make stop` stops the Postgres container. Data is kept in a Docker volume.
 - No Docker? Set `DATABASE_URL` in `.env` to any Postgres, then use `go run ./cmd/migrate up`, `go run ./cmd/seed` and `go run ./cmd/server` instead of the `make` targets.
 - To run everything in containers instead: `docker compose --profile app up --build`. See [Deployment]({{< relref "deployment" >}}).

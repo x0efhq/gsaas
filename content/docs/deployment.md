@@ -24,7 +24,7 @@ docker run --env-file .env --entrypoint /worker gsaas        # worker
 
 Your deployment needs:
 
-- Postgres, with `DATABASE_URL` pointing to it
+- A database, with `DATABASE_URL` pointing to it
 - Migrations applied (`/migrate up`, or `go run ./cmd/migrate up`) before starting a new version
 - The worker running as a separate process next to the API
 - Production settings: `APP_ENV=production` (anything but `local`), your own `JWT_SECRET` (at least 32 random bytes; the server won't start without it), `APP_BASE_URL`, and any Stripe, SMTP and S3 variables you use. See [Configuration]({{< relref "configuration" >}}).

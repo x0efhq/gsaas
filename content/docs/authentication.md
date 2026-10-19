@@ -13,7 +13,7 @@ Authentication decides who is calling the API. Clients send `Authorization: Bear
 
 Use one auth mode.
 
-- **Local (the default).** gsaas signs users up and in itself, with magic links or passwords. Nothing outside your server and Postgres is needed. Pick it unless you already use Supabase.
+- **Local (the default).** gsaas signs users up and in itself, with magic links or passwords. Nothing outside your server and the database is needed. Pick it unless you already use Supabase.
 - **Supabase.** Supabase Auth handles sign-up and sign-in, and gsaas only checks its tokens. Pick it if your frontend already uses Supabase Auth. The swap is three small edits, listed under [Supabase auth](#supabase-auth).
 
 API keys, organizations and invites work the same in both modes.
