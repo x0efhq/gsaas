@@ -8,7 +8,7 @@ title = "gsaas docs"
 
 [params]
   # Buy button on the home page. Set to the Gumroad product URL.
-  gumroadURL = "#"
+  gumroadURL = "https://x0efhq.gumroad.com/l/gsaas"
   BookTheme = "auto"
   BookSection = "docs"
   BookSearch = true
