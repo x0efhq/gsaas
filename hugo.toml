@@ -1,4 +1,4 @@
-baseURL = "https://x0ef.github.io/gsaas-docs/"
+baseURL = "https://x0ef.github.io/gsaas/"
 locale = "en-us"
 title = "gsaas docs"
 
@@ -10,7 +10,7 @@ title = "gsaas docs"
   BookTheme = "auto"
   BookSection = "docs"
   BookSearch = true
-  BookRepo = "https://github.com/X0EF/gsaas-docs"
+  BookRepo = "https://github.com/X0EF/gsaas"
   BookEditPath = "edit/main"
 
 [markup.goldmark.renderer]
