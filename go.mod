@@ -1,4 +1,4 @@
-module github.com/X0EF/gsaas-docs
+module github.com/X0EF/gsaas
 
 go 1.25.1
 
