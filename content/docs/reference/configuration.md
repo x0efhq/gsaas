@@ -25,8 +25,6 @@ Settings are environment variables, read by `platform/config/config.go`. A varia
 | `MAX_BODY_BYTES` | 1 MiB | Largest accepted request body |
 | `CORS_ALLOWED_ORIGINS` | empty | Allowed browser origins. Empty sends no CORS headers |
 | `API_RATE_LIMIT` | `300` | Authenticated requests per minute |
-| `AUTH_PROVIDER` | `local` | `local` signs users in at `/auth`. `supabase` verifies Supabase tokens instead |
-| `SUPABASE_URL` | none | Supabase project URL. Required when `AUTH_PROVIDER=supabase` |
 | `AUTH_RATE_LIMIT` | `10` | Public auth requests per minute per IP |
 | `TRUST_PROXY` | `false` | When `true`, the client IP is the right-most `X-Forwarded-For` entry |
 
