@@ -11,8 +11,9 @@ Use local auth when gsaas should sign users up and in. That is the default. You 
 
 Use Supabase when the frontend already signs users in with Supabase Auth. gsaas then only checks those tokens.
 
-1. Set `SUPABASE_URL` in `.env` to the project URL, such as `https://your-project.supabase.co`.
-2. In `app.New`, replace the local verifier with the Supabase verifier. The commented block in `app/app.go` is the swap. Import `gsaas/adapters/supabase`.
+1. Add `SupabaseURL string` to `Config` in `platform/config/config.go`. In `Load`, set it to `strings.TrimRight(r.string("SUPABASE_URL", ""), "/")`.
+2. Set `SUPABASE_URL` in `.env` to the project URL, such as `https://your-project.supabase.co`.
+3. In `app.New`, replace `sessions := auth.ValidateToken(idSvc)` with the Supabase verifier. Import `gsaas/adapters/supabase`.
 
 ```go
 sb, err := supabase.New(context.Background(), idSvc, cfg.SupabaseURL)
@@ -22,7 +23,7 @@ if err != nil {
 sessions := auth.ValidateToken(sb)
 ```
 
-3. In `router`, delete the `/auth` mount:
+4. In `router`, delete the `/auth` mount:
 
 ```go
 r.With(authLimit).Mount("/auth", identityHandler.AuthRoutes())

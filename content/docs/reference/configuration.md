@@ -18,6 +18,7 @@ Settings are environment variables, read by `platform/config/config.go`. A varia
 | --- | --- | --- |
 | `APP_ENV` | `local` | Any value other than `local` enables the production checks below |
 | `PORT` | `5000` | Listen port |
+| `LOG_LEVEL` | `info` | Lowest level logged: `debug`, `info`, `warn` or `error` |
 | `APP_BASE_URL` | `http://localhost:5000` | Public origin of this API |
 | `APP_NAME` | `Boilerplate` | Name used in email |
 | `SHUTDOWN_TIMEOUT` | `10s` | How long a stopping server waits for requests |
@@ -28,6 +29,8 @@ Settings are environment variables, read by `platform/config/config.go`. A varia
 | `TRUST_PROXY` | `false` | When `true`, the client IP is the right-most `X-Forwarded-For` entry |
 
 Set `TRUST_PROXY` only when one proxy appends that header. Further-left entries are ignored.
+
+`TRUST_PROXY` and `WEBHOOK_ALLOW_INSECURE` take `true` or `false` (also `1`, `0`, `TRUE`, `FALSE`). Any other value stops startup.
 
 ## Database
 
@@ -45,7 +48,6 @@ Set `TRUST_PROXY` only when one proxy appends that header. Further-left entries 
 | `MAGIC_LINK_TTL` | `15m` | Magic-link lifetime |
 | `MAGIC_LINK_HOURLY_LIMIT` | `5` | Magic-link requests recorded per address per hour |
 | `INVITE_TTL` | `168h` | Invite lifetime |
-| `SUPABASE_URL` | empty | When set, the process can verify Supabase tokens. Local auth stays mounted until the verifier in `app.New` is swapped |
 
 Outside `APP_ENV=local`, startup fails unless `JWT_SECRET` is at least 32 random bytes. Responses then include `Strict-Transport-Security`.
 
