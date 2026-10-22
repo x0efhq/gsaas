@@ -7,18 +7,25 @@ weight: 5
 
 Use one mode. API keys, organizations, and invites behave the same in both.
 
-Use local auth when gsaas should sign users up and in. That is the default. You change nothing. Passwords and magic links are already mounted at `/auth`.
+Use local auth when gsaas should sign users up and in. That is the default. You change nothing. Passwords and magic links are mounted at `/auth`.
 
-Use Supabase when the frontend already signs users in with Supabase Auth. gsaas then only checks those tokens.
+Use Supabase when the frontend already signs users in with Supabase Auth. gsaas then checks those tokens.
 
-Set both in `.env`:
+To switch to Supabase, edit `app.New` in `app/app.go`. Replace this line:
 
-```sh
-AUTH_PROVIDER=supabase
-SUPABASE_URL=https://your-project.supabase.co
+```go
+sessions, stopAuth, err := localSessions(idSvc)
 ```
 
-gsaas then verifies Supabase tokens and does not mount `/auth`. Startup fails if `SUPABASE_URL` is missing.
+with this line, using your project URL:
+
+```go
+sessions, stopAuth, err := supabaseSessions(ctx, idSvc, "https://your-project.supabase.co")
+```
+
+gsaas then verifies Supabase tokens against the project's JWKS.
+
+The `/auth` routes stay mounted. If the frontend signs users in only through Supabase, delete the `/auth` mount in `router` in the same file.
 
 Keep the `identity` module. It still stores users. `POST /invites/accept` stays on gsaas in both modes.
 
