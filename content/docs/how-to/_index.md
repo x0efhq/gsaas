@@ -19,3 +19,7 @@ Task pages for a repository you can already run. Each one starts from a goal and
 - [How to add an email]({{< relref "add-an-email" >}})
 - [How to publish a webhook event]({{< relref "publish-a-webhook-event" >}})
 - [How to accept a file upload]({{< relref "accept-a-file-upload" >}})
+- [How to deploy to Fly.io]({{< relref "deploy-to-fly" >}})
+- [How to deploy to Render]({{< relref "deploy-to-render" >}})
+- [How to deploy to Railway]({{< relref "deploy-to-railway" >}})
+- [How to deploy to a VPS with Docker Compose]({{< relref "deploy-to-a-vps" >}})
