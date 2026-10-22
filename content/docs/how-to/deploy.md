@@ -24,7 +24,7 @@ Build and run:
 
 ```bash
 docker build --build-arg VERSION=1.0.0 -t gsaas .
-docker run --env-file .env gsaas /migrate up
+docker run --env-file .env --entrypoint /migrate gsaas up
 docker run --env-file .env -p 5000:5000 gsaas
 docker run --env-file .env --entrypoint /worker gsaas
 ```
