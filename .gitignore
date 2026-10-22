@@ -1,3 +1,6 @@
 public/
 resources/
 .hugo_build.lock
+
+# Local working notes. Published pages live in content/docs/.
+/docs/*.md
