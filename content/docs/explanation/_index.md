@@ -3,4 +3,8 @@ title: Explanation
 weight: -20
 ---
 
-Explanation pages are not written yet. Until they are, [Project structure]({{< relref "project-structure" >}}) covers how the code is arranged.
+# Explanation
+
+Why the code is arranged the way it is.
+
+- [Why the code is arranged this way]({{< relref "why-this-shape" >}})

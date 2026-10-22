@@ -3,4 +3,9 @@ title: Reference
 weight: -30
 ---
 
-Reference pages are not written yet. Until they are, look up routes and settings under [Services]({{< relref "services" >}}).
+# Reference
+
+Facts about the running API and its settings.
+
+- [API]({{< relref "api" >}})
+- [Configuration]({{< relref "configuration" >}})
