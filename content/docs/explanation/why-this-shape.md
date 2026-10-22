@@ -22,7 +22,7 @@ gsaas/
 ├── files/          file uploads
 ├── jobs/           job status, list and cancel API
 ├── admin/          platform-wide stats for the SaaS owner
-├── platform/       shared helpers: auth, config, email, events, httpx, worker, log
+├── platform/       shared helpers: auth, config, email, events, httpx, worker, logging
 ├── adapters/       database, Stripe, Supabase auth, job queue, S3 storage
 ├── database/       migrations, SQL queries, generated sqlc code
 └── cmd/            server, worker, migrate, seed
