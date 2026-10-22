@@ -8,7 +8,7 @@ aliases:
 
 # How to add an email
 
-Modules do not send mail. They publish an event. A handler in `app/subscribe.go` renders a template and sends it.
+Modules do not send mail. They publish an event. A handler in `app/subscribe.go` renders a template and queues it as an `email.send` job, which sends it.
 
 SMTP settings are on the [Configuration]({{< relref "configuration" >}}) page. With `SMTP_HOST` empty, the message is written to the server log.
 
@@ -21,7 +21,7 @@ SMTP settings are on the [Configuration]({{< relref "configuration" >}}) page. W
 }
 ```
 
-2. Subscribe to the event in `app/subscribe.go`. Render the template, set `To`, and call `mailer.Send`.
+2. Subscribe to the event in `app/subscribe.go`. Render the template, set `To`, and call `enqueueEmail`.
 
 ```go
 events.Subscribe(bus, identity.EventRegistered, func(ctx context.Context, e events.Event[identity.UserRegistered]) error {
@@ -30,8 +30,8 @@ events.Subscribe(bus, identity.EventRegistered, func(ctx context.Context, e even
 		return err
 	}
 	m.To = e.Payload.Email
-	return mailer.Send(ctx, m)
+	return enqueueEmail(ctx, jobs, m)
 })
 ```
 
-Mail is not a job. The handler sends it during the event.
+The `email.send` job sends the message in the background, so the request does not wait on the mail server. A failed send is retried by the job queue.
