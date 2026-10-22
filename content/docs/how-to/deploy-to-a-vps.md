@@ -17,33 +17,23 @@ Run the database, migrations, API, worker, and a TLS proxy with the repository's
    JWT_SECRET=<at least 32 random bytes>
    APP_BASE_URL=https://api.example.com
    TRUST_PROXY=true
+   POSTGRES_PASSWORD=<a strong password>
    VERSION=1.0.0
    ```
 
-5. Create `compose.override.yaml`:
+5. Create `compose.prod.yaml`:
 
    ```yaml
    services:
      postgres:
-       ports: !reset []
-       environment:
-         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
        restart: unless-stopped
 
      app:
        ports: !reset []
-       environment:
-         DATABASE_URL: postgres://app:${POSTGRES_PASSWORD:?}@postgres:5432/app?sslmode=disable
        restart: unless-stopped
 
      worker:
-       environment:
-         DATABASE_URL: postgres://app:${POSTGRES_PASSWORD:?}@postgres:5432/app?sslmode=disable
        restart: unless-stopped
-
-     migrate:
-       environment:
-         DATABASE_URL: postgres://app:${POSTGRES_PASSWORD:?}@postgres:5432/app?sslmode=disable
 
      caddy:
        image: caddy:2
@@ -62,21 +52,22 @@ Run the database, migrations, API, worker, and a TLS proxy with the repository's
      caddy_data:
    ```
 
-6. Add `POSTGRES_PASSWORD=<a strong password>` to `.env`.
-7. Start the stack:
+6. Start the stack. Name both files so Compose skips the local `compose.override.yaml`, which publishes Postgres:
 
    ```sh
-   docker compose --profile app up -d --build
+   docker compose -f docker-compose.yaml -f compose.prod.yaml --profile app up -d --build
    ```
 
-8. Confirm the `migrate` container exited with code 0:
+7. Confirm the `migrate` container exited with code 0:
 
    ```sh
-   docker compose ps -a migrate
+   docker compose -f docker-compose.yaml -f compose.prod.yaml ps -a migrate
    ```
 
-9. Confirm `https://api.example.com/readyz` returns 200.
+8. Confirm `https://api.example.com/readyz` returns 200.
 
-To ship a new version, pull the code, update `VERSION`, and run step 7 again.
+To ship a new version, pull the code, update `VERSION`, and run step 6 again.
+
+Postgres reads `POSTGRES_PASSWORD` only when it creates the `pgdata` volume. An existing volume keeps its old password. To change it, run `ALTER USER app PASSWORD '<new password>';` in the database, then update `.env`.
 
 See [Configuration]({{< relref "configuration" >}}) for every variable.
