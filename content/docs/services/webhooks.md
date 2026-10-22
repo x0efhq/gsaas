@@ -1,6 +1,8 @@
 ---
 title: Webhooks
 weight: -14
+aliases:
+  - /docs/webhooks/
 ---
 
 # Outbound webhooks

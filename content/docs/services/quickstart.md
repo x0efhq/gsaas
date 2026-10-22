@@ -1,6 +1,8 @@
 ---
 title: Quickstart
 weight: -20
+aliases:
+  - /docs/quickstart/
 ---
 
 # Quickstart

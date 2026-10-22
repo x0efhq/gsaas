@@ -1,6 +1,8 @@
 ---
 title: Configuration
 weight: -19
+aliases:
+  - /docs/configuration/
 ---
 
 # Configuration

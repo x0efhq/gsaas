@@ -1,6 +1,8 @@
 ---
 title: Platform admin
 weight: -6
+aliases:
+  - /docs/admin/
 ---
 
 # Platform admin

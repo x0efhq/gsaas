@@ -1,6 +1,8 @@
 ---
 title: Testing
 weight: -9
+aliases:
+  - /docs/testing/
 ---
 
 # Testing

@@ -1,6 +1,8 @@
 ---
 title: Database & migrations
 weight: -10
+aliases:
+  - /docs/database/
 ---
 
 # Database & migrations

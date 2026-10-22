@@ -1,6 +1,8 @@
 ---
 title: Email
 weight: -13
+aliases:
+  - /docs/email/
 ---
 
 # Email

@@ -1,6 +1,8 @@
 ---
 title: Jobs
 weight: -12
+aliases:
+  - /docs/jobs/
 ---
 
 # Jobs

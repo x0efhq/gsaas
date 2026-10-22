@@ -1,6 +1,8 @@
 ---
 title: Billing
 weight: -15
+aliases:
+  - /docs/billing/
 ---
 
 # Billing with Stripe

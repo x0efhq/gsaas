@@ -1,6 +1,8 @@
 ---
 title: Authentication
 weight: -17
+aliases:
+  - /docs/authentication/
 ---
 
 # Authentication

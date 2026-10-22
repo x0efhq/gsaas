@@ -1,6 +1,8 @@
 ---
 title: Organizations & multi-tenancy
 weight: -16
+aliases:
+  - /docs/organizations/
 ---
 
 # Organizations & multi-tenancy

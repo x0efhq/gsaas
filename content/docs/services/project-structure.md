@@ -1,7 +1,7 @@
 ---
 title: Project structure
 weight: -18
-aliases: ["/docs/architecture/"]
+aliases: ["/docs/architecture/", "/docs/project-structure/"]
 ---
 
 # Project structure

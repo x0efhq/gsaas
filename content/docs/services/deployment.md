@@ -1,6 +1,8 @@
 ---
 title: Deployment
 weight: -8
+aliases:
+  - /docs/deployment/
 ---
 
 # Deployment

@@ -1,6 +1,8 @@
 ---
 title: API reference
 weight: -7
+aliases:
+  - /docs/api-reference/
 ---
 
 # API reference

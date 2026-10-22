@@ -1,6 +1,8 @@
 ---
 title: File uploads
 weight: -11
+aliases:
+  - /docs/files/
 ---
 
 # File uploads
