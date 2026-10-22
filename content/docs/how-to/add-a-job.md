@@ -20,4 +20,4 @@ The worker runs until you stop it. On start it also runs any job whose `Every` i
 
 Return `worker.ErrPermanent` from the handler, wrapped with the method name, when the payload will never succeed. Any other error is retried. Honor `ctx`.
 
-The sample is `projects.ApplyJob`, enqueued from `projects/service.go` and registered in `jobs()`. Built-in job names and what fails when the worker is down are on the [Jobs]({{< relref "jobs" >}}) page.
+The sample is `projects.ApplyJob`, enqueued from `projects/service.go` and registered in `jobs()`. Set `Every` on the `worker.Job` to run it on a schedule without enqueueing it. Built-in job names, statuses, and retries are on the [Jobs]({{< ref "docs/reference/jobs.md" >}}) page.

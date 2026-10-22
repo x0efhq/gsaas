@@ -1,6 +1,9 @@
 ---
 title: Run the API and make a first call
 weight: 1
+aliases:
+  - /docs/quickstart/
+  - /docs/services/quickstart/
 ---
 
 # Run the API and make a first call
@@ -105,6 +108,12 @@ The response is the admin user:
 {"data":{"id":"...","email":"admin@local","first_name":"Admin","last_name":"Local","is_platform_admin":true},"object":"user"}
 ```
 
-That call is the end of this tutorial. The server in the first terminal keeps running until you stop it with Ctrl+C.
+That call is the end of this tutorial. The server in the first terminal keeps running until you stop it with Ctrl+C. `make stop` stops Postgres and keeps its data.
 
-Other ways to run the same API, including Docker for the API itself, are on the [Quickstart]({{< relref "quickstart" >}}) page.
+To run the API in containers instead, from the repository root:
+
+```bash
+docker compose --profile app up --build
+```
+
+With no Docker, set `DATABASE_URL` in `.env` to a Postgres you can reach, then run `go run ./cmd/migrate up`, `go run ./cmd/seed`, and `go run ./cmd/server`.

@@ -17,4 +17,4 @@ Add a feature as its own top-level package, then connect it in `app/`. Copy `pro
 
 Only `app/` imports `adapters/`. A domain package imports no other domain except the core packages `identity` and `organization`. `app/imports_test.go` fails the build when that rule breaks.
 
-For the file list and why wiring lives in `app/`, see [Project structure]({{< relref "project-structure" >}}).
+Why wiring lives in `app/` is on [Why the code is arranged this way]({{< relref "why-this-shape" >}}).

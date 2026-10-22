@@ -1,6 +1,9 @@
 ---
 title: How to deploy
 weight: 7
+aliases:
+  - /docs/deployment/
+  - /docs/services/deployment/
 ---
 
 # How to deploy
@@ -32,4 +35,4 @@ Put HTTPS in front of the API. When exactly one proxy appends to `X-Forwarded-Fo
 
 `GET /healthz` returns 200 when the process is up. `GET /readyz` returns 200 when the process can reach the database.
 
-The image layout and the local Compose profile are on the [Deployment]({{< relref "deployment" >}}) page.
+Variable names are on the [Configuration]({{< relref "configuration" >}}) page.

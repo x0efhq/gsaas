@@ -1,8 +1,8 @@
 ---
 title: Roadmap
-weight: 4
+weight: 10
 aliases:
-  - /docs/roadmap/
+  - /docs/services/roadmap/
 ---
 
 # Roadmap

@@ -1,6 +1,9 @@
 ---
 title: API
 weight: 1
+aliases:
+  - /docs/api-reference/
+  - /docs/services/api-reference/
 ---
 
 # API

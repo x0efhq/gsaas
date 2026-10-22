@@ -1,6 +1,9 @@
 ---
 title: How to run the tests
 weight: 3
+aliases:
+  - /docs/testing/
+  - /docs/services/testing/
 ---
 
 # How to run the tests
@@ -29,4 +32,4 @@ Module tests use the in-memory stores in each `mem.go`. They do not need Postgre
 TEST_DATABASE_URL=postgres://user:pass@localhost:5432/gsaas_test make check
 ```
 
-What each suite asserts is on the [Testing]({{< relref "testing" >}}) page.
+`app/imports_test.go` fails when a package imports across the boundary. `app/isolation_test.go` fails when a tenant route is not covered. `app/openapi_test.go` fails when a mounted route is missing from `app/openapi.yaml`.

@@ -1,6 +1,9 @@
 ---
 title: How to charge an organization
 weight: 6
+aliases:
+  - /docs/billing/
+  - /docs/services/billing/
 ---
 
 # How to charge an organization
@@ -46,4 +49,4 @@ Select these webhook events in Stripe: `checkout.session.completed`, `customer.s
 
 To refuse a route when the organization is not on `pro`, mount it with `billingHandler.RequirePlan(billing.PlanPro)` after `tenant`. A caller who is not on the plan gets 402.
 
-Price ids, trials, and the customer portal are on the [Billing]({{< relref "billing" >}}) page.
+A Stripe subscription in `trialing` counts as on the plan. `POST /organizations/{orgID}/billing/portal` returns the customer portal URL after you enable the portal in Stripe.

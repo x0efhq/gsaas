@@ -1,6 +1,9 @@
 ---
 title: Configuration
 weight: 2
+aliases:
+  - /docs/configuration/
+  - /docs/services/configuration/
 ---
 
 # Configuration

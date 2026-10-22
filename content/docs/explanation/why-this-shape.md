@@ -1,11 +1,32 @@
 ---
 title: Why the code is arranged this way
 weight: 1
+aliases:
+  - /docs/architecture/
+  - /docs/project-structure/
+  - /docs/services/project-structure/
 ---
 
 # Why the code is arranged this way
 
-gsaas is one Go program. Each feature is a package at the repository root, and `app/` is the only package that is allowed to know about all of them. That split is the whole layout. The directory list is on [Project structure]({{< relref "project-structure" >}}). This page is why the split exists.
+gsaas is one Go program. Each feature is a package at the repository root, and `app/` is the only package that is allowed to know about all of them. That split is the whole layout.
+
+```
+gsaas/
+├── app/            composition root: wiring, routes, event subscriptions, jobs
+├── identity/       users, sign-in, sessions, magic links
+├── organization/   organizations, members, invites, roles, API keys
+├── billing/        plans, checkout, subscriptions
+├── projects/       sample module to copy for your own features
+├── webhooks/       outbound webhooks
+├── files/          file uploads
+├── jobs/           job status, list and cancel API
+├── admin/          platform-wide stats for the SaaS owner
+├── platform/       shared helpers: auth, config, email, events, httpx, worker, log
+├── adapters/       database, Stripe, Supabase auth, job queue, S3 storage
+├── database/       migrations, SQL queries, generated sqlc code
+└── cmd/            server, worker, migrate, seed
+```
 
 ## One place wires the process
 

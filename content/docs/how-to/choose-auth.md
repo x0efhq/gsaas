@@ -31,5 +31,3 @@ r.With(authLimit).Mount("/auth", identityHandler.AuthRoutes())
 Keep the `identity` module. It still stores users. `POST /invites/accept` stays on gsaas in both modes.
 
 Restart the API after the change. A Supabase access token then authenticates the caller. On the first request, gsaas creates a user row whose id is the Supabase `sub`.
-
-Route and token details are on the [Authentication]({{< relref "authentication" >}}) page.
