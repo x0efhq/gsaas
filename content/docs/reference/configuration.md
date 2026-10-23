@@ -88,15 +88,20 @@ An empty `FRONTEND_BASE_URL` means links use `APP_BASE_URL`.
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `S3_ENDPOINT` | empty | Empty uses AWS. Set it for another S3-compatible store |
-| `S3_REGION` | empty | |
-| `S3_PUBLIC_URL` | empty | Base for public links. Empty builds AWS links |
-| `S3_ACCESS_KEY_ID` | empty | Empty leaves file storage unconfigured |
-| `S3_SECRET_ACCESS_KEY` | empty | |
-| `S3_PUBLIC_BUCKET` | `public` | |
-| `S3_PRIVATE_BUCKET` | `private` | |
-| `FILE_EXPIRES` | `15m` | Lifetime of a signed download URL |
+| `STORAGE_DRIVER` | `disk` | `disk` or `s3`. Any other value stops startup |
+| `STORAGE_DIR` | `./data/uploads` | `disk` only. Root directory for stored files. The image sets `/data/uploads` |
+| `STORAGE_SIGNING_KEY` | `local-dev-storage-signing-key` | `disk` only. Signs upload and download URLs. The default is for `APP_ENV=local` only |
+| `S3_ENDPOINT` | empty | `s3` only. Empty uses AWS. Set it for another S3-compatible store |
+| `S3_REGION` | empty | `s3` only |
+| `S3_PUBLIC_URL` | empty | `s3` only. Base for public links. Empty builds AWS links |
+| `S3_ACCESS_KEY_ID` | empty | `s3` only. Empty with `S3_SECRET_ACCESS_KEY` uses the AWS default credentials |
+| `S3_SECRET_ACCESS_KEY` | empty | `s3` only. Set with `S3_ACCESS_KEY_ID` or not at all |
+| `S3_PUBLIC_BUCKET` | `public` | `s3` only |
+| `S3_PRIVATE_BUCKET` | `private` | `s3` only |
+| `FILE_EXPIRES` | `15m` | Lifetime of a signed upload or download URL |
 | `UPLOAD_MAX_BYTES` | 10 MiB | Largest upload |
+
+With `STORAGE_DRIVER=disk`, files live in `STORAGE_DIR` under `public/` and `private/`. The API serves them at `/storage/{visibility}/{key}`. Upload and private download URLs carry `exp` and `sig`. Public files need no signature. Outside `APP_ENV=local`, startup fails unless `STORAGE_SIGNING_KEY` is at least 32 random bytes. The API and the worker must share `STORAGE_DIR`.
 
 ## Webhooks and worker
 

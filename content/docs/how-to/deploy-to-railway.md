@@ -46,7 +46,7 @@ Run the API and the worker as two Railway services built from the same repositor
 3. In **Settings** > **Deploy**, set **Start Command** to `/worker`.
 4. Deploy the service.
 
-Add any Stripe, SMTP, or storage variables to both services.
+Add any Stripe or SMTP variables to both services. The services do not share a disk, so add `STORAGE_DRIVER=s3` and the S3 variables from [How to store files in S3]({{< relref "store-files-in-s3" >}}) to both.
 
 ## Add a domain
 

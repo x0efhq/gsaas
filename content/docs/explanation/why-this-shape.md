@@ -23,7 +23,7 @@ gsaas/
 ├── jobs/           job status, list and cancel API
 ├── admin/          platform-wide stats for the SaaS owner
 ├── platform/       shared helpers: auth, config, email, events, httpx, worker, logging
-├── adapters/       database, Stripe, Supabase auth, job queue, S3 storage
+├── adapters/       database, Stripe, Supabase auth, job queue, disk and S3 storage
 ├── database/       migrations, SQL queries, generated sqlc code
 └── cmd/            server, worker, migrate, seed
 ```
@@ -54,4 +54,4 @@ API keys hold permissions and no role. A person creating a key cannot grant a pe
 
 ## What this leaves out
 
-The layout does not include a frontend. Clients send a bearer token. It also does not try to make every feature optional at runtime. Stripe, SMTP, and S3 turn off when their variables are empty. The packages are still in the binary. Removing a feature means not mounting it, which is again a change in `app/`.
+The layout does not include a frontend. Clients send a bearer token. It also does not try to make every feature optional at runtime. Stripe and SMTP turn off when their variables are empty. File storage defaults to the local disk. The packages are still in the binary. Removing a feature means not mounting it, which is again a change in `app/`.

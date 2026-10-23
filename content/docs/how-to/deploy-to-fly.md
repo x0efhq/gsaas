@@ -29,7 +29,7 @@ Run the API and the worker as two process groups in one Fly app. For the setting
 
 ## Set secrets
 
-Set the secrets, plus any Stripe, SMTP, or storage variables:
+Set the secrets, plus any Stripe or SMTP variables. The API and the worker run on separate machines, so also set `STORAGE_DRIVER=s3` and the S3 variables from [How to store files in S3]({{< relref "store-files-in-s3" >}}):
 
 ```sh
 fly secrets set --stage -a gsaas \
