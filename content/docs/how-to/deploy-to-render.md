@@ -69,7 +69,7 @@ Define the API, the worker, and the database in one Blueprint. For the settings 
 
 3. In the Render Dashboard, click **New** > **Blueprint** and select the repository.
 
-4. Enter `APP_BASE_URL` when Render prompts for it. Add any Stripe, SMTP, or storage variables to the `gsaas-shared` group.
+4. Enter `APP_BASE_URL` when Render prompts for it. Add any Stripe or SMTP variables to the `gsaas-shared` group. The services do not share a disk, so add `STORAGE_DRIVER=s3` and the S3 variables from [How to store files in S3]({{< relref "store-files-in-s3" >}}) to the group as well.
 
 5. Click **Deploy Blueprint**.
 

@@ -16,7 +16,10 @@ Set production values in the environment you pass to the containers:
 - `JWT_SECRET` to at least 32 random bytes (the server refuses to start without it)
 - `DATABASE_URL` to the production database
 - `APP_BASE_URL` to the public API origin
-- Stripe, SMTP, and S3 variables for the features you use
+- File storage: `STORAGE_SIGNING_KEY` to at least 32 random bytes for the default `disk` driver, or `STORAGE_DRIVER=s3` and the S3 variables (see [How to store files in S3]({{< relref "store-files-in-s3" >}}))
+- Stripe and SMTP variables for the features you use
+
+The `disk` driver needs one host whose API and worker share a persistent `STORAGE_DIR`. Use S3 when they run on separate machines.
 
 Do not set `WEBHOOK_ALLOW_INSECURE`.
 

@@ -15,6 +15,7 @@ Run the database, migrations, API, worker, and a TLS proxy with the repository's
    ```sh
    APP_ENV=production
    JWT_SECRET=<at least 32 random bytes>
+   STORAGE_SIGNING_KEY=<at least 32 random bytes>
    APP_BASE_URL=https://api.example.com
    TRUST_PROXY=true
    POSTGRES_PASSWORD=<a strong password>
@@ -67,6 +68,8 @@ Run the database, migrations, API, worker, and a TLS proxy with the repository's
 8. Confirm `https://api.example.com/readyz` returns 200.
 
 To ship a new version, pull the code, update `VERSION`, and run step 6 again.
+
+Uploaded files stay in the `uploads` volume, which the API and the worker share. Back it up with the database.
 
 Postgres reads `POSTGRES_PASSWORD` only when it creates the `pgdata` volume. An existing volume keeps its old password. To change it, run `ALTER USER app PASSWORD '<new password>';` in the database, then update `.env`.
 
