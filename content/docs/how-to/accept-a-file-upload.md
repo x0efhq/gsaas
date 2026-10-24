@@ -8,7 +8,7 @@ aliases:
 
 # How to accept a file upload
 
-The client uploads bytes to a presigned URL, not to the JSON API. With the default `disk` driver, that URL is a signed `/storage/` route on the API. With `s3`, the URL points at the bucket. Storage settings are on the [Configuration]({{< relref "configuration" >}}) page. To move to S3, see [How to store files in S3]({{< relref "store-files-in-s3" >}}).
+The client uploads bytes to a presigned URL, not to the JSON API. By default, that URL is a signed `/storage/` route on the API. After you switch to S3, it points at the bucket. Storage settings are on the [Configuration]({{< relref "configuration" >}}) page. To move to S3, see [How to store files in S3]({{< relref "store-files-in-s3" >}}).
 
 The caller is a signed-in user. An API key receives 403.
 

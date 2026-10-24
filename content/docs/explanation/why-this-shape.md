@@ -23,7 +23,7 @@ gsaas/
 ├── jobs/           job status, list and cancel API
 ├── admin/          platform-wide stats for the SaaS owner
 ├── platform/       shared helpers: auth, config, email, events, httpx, worker, logging
-├── adapters/       database, Stripe, Supabase auth, job queue, disk and S3 storage
+├── adapters/       database, Stripe, Supabase auth, job queue, disk storage (S3 adapter included)
 ├── database/       migrations, SQL queries, generated sqlc code
 └── cmd/            server, worker, migrate, seed
 ```
@@ -54,4 +54,6 @@ API keys hold permissions and no role. A person creating a key cannot grant a pe
 
 ## What this leaves out
 
-The layout does not include a frontend. Clients send a bearer token. It also does not try to make every feature optional at runtime. Stripe and SMTP turn off when their variables are empty. File storage defaults to the local disk. The packages are still in the binary. Removing a feature means not mounting it, which is again a change in `app/`.
+The layout does not include a frontend. Clients send a bearer token. It also does not try to make every feature optional at runtime. Stripe and SMTP turn off when their variables are empty. File storage is the local disk. The packages are still in the binary. Removing a feature means not mounting it, which is again a change in `app/`.
+
+Auth and file storage are not settings. You switch them in `app.New`. A saved file key exists only in the store that wrote it, so flipping a variable on a running deployment would orphan every stored file. Making the switch a code change keeps it deliberate. A future project generator will make that edit for you.
