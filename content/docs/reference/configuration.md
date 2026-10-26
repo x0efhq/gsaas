@@ -36,7 +36,7 @@ Set `TRUST_PROXY` only when one proxy appends that header. Further-left entries 
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `DATABASE_URL` | | Postgres URL. Required |
+| `DATABASE_URL` | | Postgres URL, or a SQLite file path after [the SQLite switch]({{< relref "use-sqlite" >}}). Required |
 
 ## Auth
 

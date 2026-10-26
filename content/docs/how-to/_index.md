@@ -20,6 +20,7 @@ Task pages for a repository you can already run. Each one starts from a goal and
 - [How to publish a webhook event]({{< relref "publish-a-webhook-event" >}})
 - [How to accept a file upload]({{< relref "accept-a-file-upload" >}})
 - [How to store files in S3]({{< relref "store-files-in-s3" >}})
+- [How to use SQLite]({{< relref "use-sqlite" >}})
 - [How to deploy to Fly.io]({{< relref "deploy-to-fly" >}})
 - [How to deploy to Render]({{< relref "deploy-to-render" >}})
 - [How to deploy to Railway]({{< relref "deploy-to-railway" >}})

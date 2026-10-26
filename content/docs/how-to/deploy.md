@@ -19,6 +19,8 @@ Set production values in the environment you pass to the containers:
 - `STORAGE_SIGNING_KEY` to at least 32 random bytes
 - Stripe and SMTP variables for the features you use
 
+With SQLite, the API runs the worker, so skip `/worker` and keep the database file on a persistent volume. See [How to use SQLite]({{< relref "use-sqlite" >}}).
+
 Files are kept on disk in `STORAGE_DIR`. The API and the worker must share it on one host with a persistent volume. Otherwise, switch to S3 first. See [How to store files in S3]({{< relref "store-files-in-s3" >}}).
 
 Do not set `WEBHOOK_ALLOW_INSECURE`.

@@ -5,7 +5,7 @@ weight: 13
 
 # How to deploy to Fly.io
 
-Run the API and the worker as two process groups in one Fly app. For the settings every host needs, see [How to deploy]({{< relref "deploy" >}}).
+Run the API and the worker as two process groups in one Fly app. For the settings every host needs, see [How to deploy]({{< relref "deploy" >}}). These steps use Postgres.
 
 ## Create the app and the database
 

@@ -28,6 +28,6 @@ Generate a project with only the parts you want:
 - **Audience:** B2B, B2C, or both.
 - **Database:** local Postgres, Supabase Postgres, or SQLite.
 - **Email:** SMTP, Postmark, or Resend.
-- **Jobs:** the Postgres-backed job queue, or a Redis-backed queue for SQLite.
+- **Jobs:** the River job queue on Postgres or SQLite.
 - **Files:** local, S3, Cloudflare R2, or Supabase Storage.
 - **Auth:** built-in or Supabase.
