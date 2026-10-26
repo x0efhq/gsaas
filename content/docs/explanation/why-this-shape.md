@@ -23,8 +23,8 @@ gsaas/
 ├── jobs/           job status, list and cancel API
 ├── admin/          platform-wide stats for the SaaS owner
 ├── platform/       shared helpers: auth, config, email, events, httpx, worker, logging
-├── adapters/       database, Stripe, Supabase auth, job queue, disk storage (S3 adapter included)
-├── database/       migrations, SQL queries, generated sqlc code
+├── adapters/       Postgres and SQLite, Stripe, Supabase auth, job queue, disk storage (S3 adapter included)
+├── database/       migrations, SQL queries, generated sqlc code, one directory per engine
 └── cmd/            server, worker, migrate, seed
 ```
 
@@ -38,7 +38,9 @@ If those connections were spread through the feature packages, adding a feature 
 
 A feature package does not import another feature package. `identity` and `organization` are the exception, and nothing imports them back in a cycle: they are the core, and they import no feature. When billing needs a user, `app/` passes in a small interface that billing defined.
 
-The rule is there so a change in one feature does not compile-break the others, and so an agent cannot quietly reach into a package it was not given. `app/imports_test.go` fails when a package crosses the line. Adapters (Postgres, Stripe, S3, Supabase) sit behind that same wall: only `app/` imports them, so swapping a provider is a change in `app/`, not a change in the feature.
+The rule is there so a change in one feature does not compile-break the others, and so an agent cannot quietly reach into a package it was not given. `app/imports_test.go` fails when a package crosses the line. Adapters (Postgres, SQLite, Stripe, S3, Supabase) sit behind that same wall: only `app/` imports them, so swapping a provider is a change in `app/`, not a change in the feature.
+
+The database follows the same rule. `adapters/postgres` and `adapters/sqlite` each implement every store, and `app.New` builds one of them. The two share no code and no runtime switch. A project keeps one engine and deletes the other's directories, so the code that ships is the code that runs.
 
 ## The organization comes from the caller
 

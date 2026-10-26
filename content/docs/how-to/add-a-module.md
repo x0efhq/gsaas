@@ -10,8 +10,8 @@ Add a feature as its own top-level package, then connect it in `app/`. Copy `pro
 `service.go` holds the types, the `Store` interface, and `New`. It does not import `net/http`.
 
 1. Copy `projects/` to a new directory named after the feature. Rename the package and its types.
-2. Add a migration for a new table as `database/postgres/migrations/0000N_<name>.sql`. Add `-- name:` queries in that file, then run `make sqlc-gen`.
-3. Implement the store in `adapters/postgres` and the same methods on `NewMemStore()` in `mem.go`.
+2. Add a migration for a new table as `database/postgres/migrations/0000N_<name>.sql` and `database/sqlite/migrations/0000N_<name>.sql`. Add `-- name:` queries to `database/postgres/query/<module>.sql` and `database/sqlite/query/<module>.sql`, then run `make sqlc-gen`.
+3. Implement the store in `adapters/postgres` and `adapters/sqlite`, and the same methods on `NewMemStore()` in `mem.go`.
 4. Construct the service in `app.New` and mount its routes in `router`, both in `app/app.go`. Follow the `projects` lines already there.
 5. Run `make check`.
 

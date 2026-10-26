@@ -5,7 +5,7 @@ weight: 16
 
 # How to deploy to a VPS with Docker Compose
 
-Run the database, migrations, API, worker, and a TLS proxy with the repository's `docker-compose.yaml`. For the settings every host needs, see [How to deploy]({{< relref "deploy" >}}).
+Run the database, migrations, API, worker, and a TLS proxy with the repository's `docker-compose.yaml`. For the settings every host needs, see [How to deploy]({{< relref "deploy" >}}). These steps use Postgres. After [the SQLite switch]({{< relref "use-sqlite" >}}), leave out `POSTGRES_PASSWORD` and the `postgres` and `worker` services.
 
 1. Install Docker Engine and the Compose plugin on the server.
 2. Point an `A` record for `api.example.com` at the server.

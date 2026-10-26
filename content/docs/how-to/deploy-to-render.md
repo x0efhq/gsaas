@@ -5,7 +5,7 @@ weight: 14
 
 # How to deploy to Render
 
-Define the API, the worker, and the database in one Blueprint. For the settings every host needs, see [How to deploy]({{< relref "deploy" >}}).
+Define the API, the worker, and the database in one Blueprint. For the settings every host needs, see [How to deploy]({{< relref "deploy" >}}). These steps use Postgres.
 
 1. Create `render.yaml` in the repository root:
 

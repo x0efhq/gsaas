@@ -5,7 +5,7 @@ weight: 15
 
 # How to deploy to Railway
 
-Run the API and the worker as two Railway services built from the same repository. For the settings every host needs, see [How to deploy]({{< relref "deploy" >}}).
+Run the API and the worker as two Railway services built from the same repository. For the settings every host needs, see [How to deploy]({{< relref "deploy" >}}). These steps use Postgres.
 
 ## Add the database
 
