@@ -31,6 +31,6 @@ The next request from that user picks it up. A new sign-in is not required.
 | `users.total` | Users, excluding deleted |
 | `users.active_7d`, `users.active_30d` | A session was issued in the window. `active_30d` only reaches as far as `REFRESH_TTL`. Supabase sessions are not counted, so those counts stay 0 |
 | `organizations` | Team organizations. Personal organizations are not included |
-| `subscriptions` | One count per status, zero when unused |
+| `subscriptions` | One count per status that has subscriptions. A status with none is left out |
 | `webhooks.deliveries_24h` | Deliveries created in the last 24 hours |
 | `jobs.failed_24h` | Jobs created in the last 24 hours whose status is now `failed`. A job canceled with `worker.ErrPermanent` is not included |
