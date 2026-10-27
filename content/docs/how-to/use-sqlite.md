@@ -11,7 +11,7 @@ Keep Postgres when you run more than one API instance, when the host has no pers
 
 Use SQLite for one server with a persistent disk, such as a small VPS. SQLite allows one writer at a time, so one process owns the file. The API runs the background worker itself, and you do not run `/worker`. The job queue's SQLite driver is experimental in River, the queue library.
 
-Switching is a code change, not a setting. `adapters/sqlite` and `database/sqlite` are already in the repository. You point `app.New` at them, then delete the Postgres code.
+Switching is a code change, not a setting. `database/sqlite` is already in the repository. You point `app.New` at it, then delete `database/postgres` and the other Postgres code.
 
 ## Change the code
 
@@ -25,7 +25,7 @@ Switching is a code change, not a setting. `adapters/sqlite` and `database/sqlit
    billingStore := sqlite.NewBillingStore(db)
    ```
 
-   Import `gsaas/adapters/sqlite` instead of `gsaas/adapters/postgres`, delete the comment, and run `gofmt -w app/app.go`.
+   Import `gsaas/database/sqlite` instead of `gsaas/database/postgres`, delete the comment, and run `gofmt -w app/app.go`.
 
 2. In `cmd/server/main.go`, start the worker after the line `go func() { errc <- srv.Serve(ln) }()`:
 
@@ -45,7 +45,7 @@ Switching is a code change, not a setting. `adapters/sqlite` and `database/sqlit
 5. In `cmd/migrate/main.go`, change `postgres.Open` and `postgres.Migrate` to `sqlite.Open` and `sqlite.Migrate`. Import `gsaas/database/sqlite/migrations` instead of `gsaas/database/postgres/migrations`, and change `goose.SetDialect("postgres")` to `goose.SetDialect("sqlite3")`.
 
 6. Delete the Postgres code:
-   - `adapters/postgres` and `database/postgres`
+   - `database/postgres`
    - the `engine: postgresql` entry in `sqlc.yaml`
    - `adapters/river/postgres.go` and `adapters/river/postgres_test.go`
    - `adapters/stripe/apply_test.go`, a Postgres-only test
@@ -89,12 +89,12 @@ SQLite also writes `app.db-wal` and `app.db-shm` beside the file. Back up all th
 1. In `AGENTS.md`:
    - Under **Done means**, delete the sentences about Postgres tests and `TEST_DATABASE_URL`. Keep the SQLite one.
    - Under **Layout**, drop "The server and worker share that directory." and make the last sentence "The database is SQLite."
-   - Reword **A migration + query** to: "Make the change under `database/sqlite`, add `-- name:` queries there, run `make sqlc-gen`, implement in `adapters/sqlite`, and mirror in `mem.go`. `adapters/storetest` runs against both."
+   - Reword **A migration + query** to: "Make the change under `database/sqlite`, add `-- name:` queries there, run `make sqlc-gen`, implement the store there, and mirror in `mem.go`. `database/storetest` runs against both."
    - Delete the **SQLite** section.
 2. In `README.md`:
    - In the tagline, change `PostgreSQL` to `SQLite`.
-   - Under **Architecture**, change Postgres to SQLite in the `adapters/` line, and drop `worker` from the `cmd/` line.
-   - Under **Module cross-section**, link `adapters/sqlite/projects.go` as the SQLite store and `database/sqlite/migrations/00003_projects.sql` as the migration.
+   - Under **Architecture**, drop Postgres from the `database/` line, and drop `worker` from the `cmd/` line.
+   - Under **Module cross-section**, link `database/sqlite/projects.go` as the SQLite store and `database/sqlite/migrations/00003_projects.sql` as the migration.
    - Under **Quickstart**, drop "and the worker" from the Docker comment, and delete the `compose.override.yaml` paragraph about Postgres on localhost:5432 and `POSTGRES_PASSWORD`. Replace the two Postgres sections with one local section: Go 1.26 (sqlc only to change SQL), then `cp .env.example .env`, `mkdir -p data`, `make seed`, and `make run`. The API runs the jobs, so drop every `go run ./cmd/worker` line.
    - In the env table, describe `DATABASE_URL` as the SQLite file path.
 

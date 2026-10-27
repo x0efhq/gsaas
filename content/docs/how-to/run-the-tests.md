@@ -26,7 +26,7 @@ go test ./projects/
 
 `make test` runs `go test ./...` and skips the format, vet, and sqlc steps.
 
-Module tests use the in-memory stores in each `mem.go`. They do not need Postgres. SQLite store tests always run, each on a temporary file. Postgres store tests under `adapters/` run only when `TEST_DATABASE_URL` is set. Point it at a disposable database. Those tests write to it. Do not point it at the database the API is using.
+Module tests use the in-memory stores in each `mem.go`. They do not need Postgres. SQLite store tests always run, each on a temporary file. Postgres store tests under `database/postgres` run only when `TEST_DATABASE_URL` is set. Point it at a disposable database. Those tests write to it. Do not point it at the database the API is using.
 
 The tests expect the schema to exist. Create the test database once, then apply the migrations to it before `make check`, the same as CI. With the Compose Postgres:
 
