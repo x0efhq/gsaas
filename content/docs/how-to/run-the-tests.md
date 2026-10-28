@@ -14,9 +14,9 @@ From the repository root, run:
 make check
 ```
 
-`make check` is the definition of done. It runs `gofmt`, `go vet ./...`, `go test ./...`, and a diff of `sqlc` output against `database/sqlc`. If `sqlc` is not installed, that last step prints a skip message and the rest still runs.
+`make check` is the definition of done. It runs `gofmt`, `go vet ./...`, `go test ./...`, and a diff of `sqlc` output against `database/*/sqlc`. If `sqlc` is not installed, that last step prints a skip message and the rest still runs.
 
-The command exits 0 when every step passes. A formatting failure prints the paths. A stale `database/sqlc` tells you to run `make sqlc-gen`.
+The command exits 0 when every step passes. A formatting failure prints the paths. A stale `database/*/sqlc` tells you to run `make sqlc-gen`.
 
 To run one package:
 
