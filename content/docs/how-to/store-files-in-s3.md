@@ -39,13 +39,13 @@ Switching is a code change, not a setting. Before you start, create two buckets,
 
 4. In `app/openapi.yaml`, delete the `/storage/{visibility}/{kind}/{owner}/{file}` path. The OpenAPI test does not catch a documented path that has no route.
 
-5. In `platform/config/config.go`, delete `STORAGE_DIR`, `STORAGE_SIGNING_KEY`, and the signing key check in `Load`. If you keep the check, production still refuses to start without a 32-byte `STORAGE_SIGNING_KEY`.
+5. In `platform/config/config.go`, delete `StorageDir`, `StorageSigningKey`, `devStorageSigningKey`, and the signing-key check in `Load`. If you keep the check, production still refuses to start without a 32-byte key.
 
-6. Run `go build ./... && go vet ./... && go test ./...`.
+6. Update `TestLoad_storage` in `platform/config/config_test.go`. `TestStorage_s3` runs the shared suite against a real bucket when `TEST_S3_ENDPOINT` is set. Then run `go build ./... && go vet ./... && go test ./...`.
 
 ## Set the variables
 
-In `.env.example`, uncomment the `S3_*` lines. Set these on the API and the worker. The worker deletes a deleted user's files, so it needs the same store.
+In `.env.example`, uncomment the `S3_*` lines and drop `STORAGE_DIR` and `STORAGE_SIGNING_KEY`. Drop `STORAGE_DIR` and the uploads volume from the `Dockerfile` and `docker-compose.yaml`. Set the `S3_*` variables on the API and the worker. The worker deletes a deleted user's files, so it needs the same store.
 
 | Variable | Default | Meaning |
 | --- | --- | --- |

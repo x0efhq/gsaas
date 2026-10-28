@@ -54,8 +54,6 @@ Switching is a code change, not a setting. `database/sqlite` is already in the r
 
 7. Run `go mod tidy`, then `make check`.
 
-`AGENTS.md` in the repository has the same checklist in its SQLite section.
-
 ## Set the database path
 
 `DATABASE_URL` holds a file path, not a URL. The directory must exist. SQLite creates the file. In `.env.example`, use the commented SQLite line and drop `POSTGRES_PASSWORD` and `TEST_DATABASE_URL` with their comments. Under `STORAGE_DIR`, drop the line that says the server and worker must share the directory:
