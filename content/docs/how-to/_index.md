@@ -13,6 +13,7 @@ Task pages for a repository you can already run. Each one starts from a goal and
 - [How to add a job]({{< relref "add-a-job" >}})
 - [How to choose local or Supabase auth]({{< relref "choose-auth" >}})
 - [How to charge an organization]({{< relref "charge-an-organization" >}})
+- [How to gate a feature by plan]({{< relref "gate-a-feature-by-plan" >}})
 - [How to deploy]({{< relref "deploy" >}})
 - [How to accept an emailed link]({{< relref "accept-an-emailed-link" >}})
 - [How to add a migration]({{< relref "add-a-migration" >}})

@@ -47,6 +47,6 @@ The response contains a Stripe Checkout URL. An API key cannot call this route.
 
 Select these webhook events in Stripe: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, and `customer.subscription.deleted`.
 
-To refuse a route when the organization is not on `pro`, mount it with `billingHandler.RequirePlan(billing.PlanPro)` after `tenant`. A caller who is not on the plan gets 402.
+To refuse a feature unless the organization is on Pro, see [How to gate a feature by plan]({{< relref "gate-a-feature-by-plan" >}}).
 
 A Stripe subscription in `trialing` counts as on the plan. `POST /organizations/{orgID}/billing/portal` returns the customer portal URL after you enable the portal in Stripe.
