@@ -59,3 +59,14 @@ a[href]:hover, a[role=button]:hover { opacity: 1; color: #9c3a08; font-weight: 5
 @media (prefers-color-scheme: dark) {
   :root[data-theme="auto"] a[href]:hover { color: #ff8a3d; }
 }
+
+/* Sidebar: stronger active item */
+.book-menu a { opacity: 1; }
+.book-menu a.active {
+  color: var(--color-link);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--color-link) 12%, transparent);
+  box-shadow: inset 2px 0 0 var(--color-link);
+  border-radius: 4px;
+  padding-left: .5rem;
+}
