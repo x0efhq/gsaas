@@ -1,6 +1,6 @@
 ---
 title: Jobs
-weight: 4
+weight: 94
 aliases:
   - /docs/jobs/
   - /docs/services/jobs/
@@ -17,12 +17,11 @@ The worker process runs the queue. The API does not. A job whose name is missing
 | `billing.process_webhook` | A Stripe event is stored | The subscription row stays unchanged |
 | `billing.cancel_subscription` | An organization with a subscription is deleted | The subscription keeps running at Stripe |
 | `webhooks.deliver` | A subscribed event is published | Customer endpoints receive nothing |
+| `email.send` | An event handler queues a rendered message | The message is not sent |
 | `identity.expire_sessions` | Worker start, then every 15 minutes | Expired refresh tokens and invites remain |
 | `projects.apply` | A project is created | The sample job never runs |
 
-Mail is not a job. Event handlers send it directly.
-
-`billing.process_webhook` and `identity.expire_sessions` are system jobs (`uuid.Nil`). They do not appear in `GET /jobs`.
+`billing.process_webhook`, `identity.expire_sessions`, and `email.send` are system jobs (`uuid.Nil`). They do not appear in `GET /jobs`.
 
 ## Status
 

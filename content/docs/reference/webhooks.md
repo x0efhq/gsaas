@@ -1,6 +1,6 @@
 ---
 title: Webhooks
-weight: 5
+weight: 95
 aliases:
   - /docs/webhooks/
   - /docs/services/webhooks/
@@ -13,6 +13,8 @@ Customer endpoints receive POSTs from the worker, not from the request that publ
 A non-2xx response, a timeout of 10 seconds, or a redirect is a failure and is retried. Private, loopback, link-local, and other reserved addresses are refused after DNS resolution and are not retried. Creating an endpoint whose URL is such an address returns 400. URLs must be `https` unless `WEBHOOK_ALLOW_INSECURE=true`, which is local only.
 
 An organization may register `WEBHOOK_MAX_ENDPOINTS` endpoints (default 20). The create response includes `secret` once. List responses omit it.
+
+To add an event type, see [How to publish a webhook event]({{< relref "/docs/background/publish-a-webhook-event.md" >}}).
 
 ## Body
 

@@ -1,6 +1,6 @@
 ---
 title: Permissions
-weight: 3
+weight: 93
 aliases:
   - /docs/organizations/
   - /docs/services/organizations/
@@ -35,4 +35,4 @@ Every organization has one owner. A request to grant, remove, demote, or have th
 
 An API key is created with `org:api_keys`. Each permission on the key must be one the creator's role holds, or the request returns 403. The raw key is returned once. A key reaches only its own organization. `/me`, `/users`, `/files`, `POST /organizations`, and the invite, API-key, and billing routes reject API keys.
 
-Platform permissions are not in this table. They are on the [Platform admin]({{< relref "platform-admin.md" >}}) page.
+Platform permissions (`platform:stats`, `platform:users:list`, `platform:users:manage`) are never on an organization role or an API key. They are added only to a platform admin's session. See [Platform admin]({{< relref "platform-admin" >}}).

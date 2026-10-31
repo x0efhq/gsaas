@@ -1,0 +1,40 @@
+---
+title: How to scale and back up
+weight: 74
+aliases:
+  - /docs/how-to/scale-and-back-up/
+---
+
+# How to scale and back up
+
+Run more than one API or worker process on Postgres, or keep a single SQLite server. Back up the database and any on-disk uploads.
+
+## Scale on Postgres
+
+The default stack uses Postgres and River for the job queue. Every API and worker process uses the same `DATABASE_URL`.
+
+Run one or more API processes behind a load balancer. Session access tokens are stateless JWTs, so any API instance can serve a request. Point every instance at the same database.
+
+Run one or more worker processes with `/worker` (or `go run ./cmd/worker`). River stores jobs in Postgres and assigns work across workers. Each worker process runs up to 10 concurrent jobs on the default queue. Stripe webhooks, customer webhook delivery, and other enqueued work need at least one worker running. See [Jobs]({{< relref "/docs/reference/jobs.md" >}}).
+
+`GET /readyz` includes `worker_ok`. Details are on the [API]({{< relref "/docs/reference/api.md" >}}) page.
+
+When API and worker machines do not share a disk, store uploads in S3. See [How to store files in S3]({{< relref "/docs/files/store-files-in-s3.md" >}}). On a single host you can keep `STORAGE_DIR` on a volume the API and worker both mount, as in [How to deploy to a VPS with Docker Compose]({{< relref "/docs/deploy/deploy-to-a-vps.md" >}}).
+
+For the two-process layout and the production checklist, see [Deploy]({{< relref "/docs/deploy/" >}}).
+
+## SQLite limits
+
+After [the SQLite switch]({{< relref "use-sqlite" >}}), one API process owns the database file. SQLite allows one writer at a time, so do not run multiple API replicas or a separate worker against the same file. The API embeds the worker; skip `/worker`.
+
+## Back up Postgres
+
+Take a logical backup of the database the API uses, for example with `pg_dump` against `DATABASE_URL`. Schedule it on the host or with your provider's backup feature. Restore with your provider's procedure or `psql` into a fresh database, then point `DATABASE_URL` at it.
+
+If uploads stay in `STORAGE_DIR`, copy that directory on the same schedule. If you use S3, rely on the bucket's versioning or replication instead.
+
+## Back up SQLite
+
+Stop the API before you copy the database. SQLite runs in WAL mode, so it writes `app.db-wal` and `app.db-shm` beside the file in `DATABASE_URL`. Copy all three files together. See [How to use SQLite]({{< relref "use-sqlite" >}}).
+
+Copy the `uploads` volume or `STORAGE_DIR` with the database when files are not in S3.

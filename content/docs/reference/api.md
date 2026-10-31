@@ -1,6 +1,6 @@
 ---
 title: API
-weight: 1
+weight: 91
 aliases:
   - /docs/api-reference/
   - /docs/services/api-reference/
@@ -75,7 +75,9 @@ Authenticated routes are limited per minute by `API_RATE_LIMIT` (default 300). T
 
 A request over the limit receives 429 and a `Retry-After` header.
 
-## Readiness
+## Health and readiness
+
+`GET /healthz` returns 200 when the process is up. It reports `VERSION` when set.
 
 `GET /readyz` pings the database. It returns 503 when the database is unreachable.
 
@@ -90,7 +92,7 @@ When the app has a worker health store, the JSON body includes `worker_ok`. It i
 | `GET /auth/oauth/callback` | No-frontend fallback: HTML page with the code and exchange instructions |
 | `POST /auth/oauth/exchange` | JSON body `{"code":"…"}`. Returns the same token object as sign-in |
 
-See [How to sign in with Google or GitHub OAuth]({{< relref "../how-to/sign-in-with-oauth.md" >}}).
+See [How to sign in with Google or GitHub OAuth]({{< relref "/docs/auth/sign-in-with-oauth.md" >}}).
 
 ## Organization API keys
 

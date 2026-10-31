@@ -1,6 +1,6 @@
 ---
 title: Configuration
-weight: 2
+weight: 92
 aliases:
   - /docs/configuration/
   - /docs/services/configuration/
@@ -29,15 +29,13 @@ Settings are environment variables, read by `platform/config/config.go`. A varia
 | `TRUST_PROXY` | `false` | When `true`, the client IP is the right-most `X-Forwarded-For` entry |
 | `OTLP_ENDPOINT` | empty | OTLP/HTTP base URL for traces and metrics. Empty disables export |
 
-Set `TRUST_PROXY` only when one proxy appends that header. Further-left entries are ignored.
-
 `TRUST_PROXY` and `WEBHOOK_ALLOW_INSECURE` take `true` or `false` (also `1`, `0`, `TRUE`, `FALSE`). Any other value stops startup.
 
 ## Database
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `DATABASE_URL` | | Postgres URL, or a SQLite file path after [the SQLite switch]({{< relref "use-sqlite" >}}). Required |
+| `DATABASE_URL` | | Postgres URL, or a SQLite file path after [the SQLite switch]({{< relref "/docs/operate/use-sqlite.md" >}}). Required |
 
 ## Auth
 
@@ -99,9 +97,9 @@ An empty `FRONTEND_BASE_URL` means links use `APP_BASE_URL`.
 | `FILE_EXPIRES` | `15m` | Lifetime of a signed upload or download URL |
 | `UPLOAD_MAX_BYTES` | 10 MiB | Largest upload |
 
-Files live in `STORAGE_DIR` under `public/` and `private/`. The API serves them at `/storage/{visibility}/{key}`. Upload and private download URLs carry `exp` and `sig`. Public files need no signature. Outside `APP_ENV=local`, startup fails unless `STORAGE_SIGNING_KEY` is at least 32 random bytes. The API and the worker must share `STORAGE_DIR`.
+Files live in `STORAGE_DIR` under `public/` and `private/`. The API serves them at `/storage/{visibility}/{key}`. Upload and private download URLs carry `exp` and `sig`. Public files need no signature. Outside `APP_ENV=local`, startup fails unless `STORAGE_SIGNING_KEY` is at least 32 random bytes. The API and the worker must share `STORAGE_DIR`. Production shared-disk and S3 rules are on the [Deploy]({{< relref "/docs/deploy/" >}}) checklist.
 
-S3 has no settings until you switch the code. See [How to store files in S3]({{< relref "store-files-in-s3" >}}).
+S3 has no settings until you switch the code. See [How to store files in S3]({{< relref "/docs/files/store-files-in-s3.md" >}}).
 
 ## Webhooks and worker
 
