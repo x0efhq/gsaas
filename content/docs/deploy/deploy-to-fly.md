@@ -7,7 +7,7 @@ aliases:
 
 # Deploy to Fly.io
 
-Follow the topology diagram on [Deploy]({{< relref "/docs/deploy/" >}}). Complete that production checklist first. These steps use Postgres.
+Run the API and the worker as two process groups in one Fly app, as in the topology diagram on [Deploy]({{< relref "/docs/deploy/" >}}). Complete that production checklist first. These steps use Postgres.
 
 ## Create the app and the database
 

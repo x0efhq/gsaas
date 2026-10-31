@@ -118,17 +118,14 @@ SQLite also writes `app.db-wal` and `app.db-shm` beside the file. Back up all th
 
 ## Change the tooling
 
-```sh
-# Makefile: delete the postgres target and remove it from dependents
-# compose.override.yaml: delete the file (it only publishes Postgres)
-# docker-compose.yaml: delete postgres and worker services, the pgdata volume,
-#   every depends_on for postgres, and the shared-upload comment; set
-#   DATABASE_URL: /data/db/app.db and mount db:/data/db next to uploads
-# Dockerfile: drop worker from the build loop and COPY; create /out/data/db;
-#   comment becomes: One image, two commands: /server (default), /migrate up
-# .github/workflows/check.yml: delete the postgres service, TEST_DATABASE_URL env,
-#   and the "Migrate the test database" step
-```
+1. In the `Makefile`, delete the `postgres` target and remove it from the targets that depend on it.
+2. Delete `compose.override.yaml`. It only publishes Postgres.
+3. In `docker-compose.yaml`, delete the `postgres` and `worker` services, the `pgdata` volume, every `depends_on` entry for `postgres`, and the comment `# The server and worker share this upload directory.` Set `DATABASE_URL: /data/db/app.db`, and mount a `db:/data/db` volume next to `uploads`.
+4. In the `Dockerfile`:
+   - Remove `worker` from the `for cmd in server worker migrate` build loop and from `COPY --from=build /server /worker /migrate /`. With `cmd/worker` deleted, the image build fails otherwise.
+   - Change the comment to `# One image, two commands: /server (default), /migrate up.`
+   - Create `/out/data/db` next to `/out/data/uploads`, so the mounted volume is writable.
+5. In `.github/workflows/check.yml`, delete the `postgres` service, the `env` block with `TEST_DATABASE_URL` and its comment, and the "Migrate the test database" step. The SQLite store tests run on a temporary file every time.
 
 ## Update AGENTS.md and README.md
 

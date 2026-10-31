@@ -10,7 +10,7 @@ aliases:
 
 # Deploy
 
-Ship from the repository image. Apply migrations before the new API serves traffic. Host pages below cover Fly, Render, Railway, and a VPS. They use Postgres. After [the SQLite switch]({{< relref "/docs/operate/use-sqlite.md" >}}), skip `/worker` and keep the database file on a persistent volume.
+Ship the API and the worker as two processes from the repository image. Apply migrations before the new API serves traffic. Host pages below cover Fly, Render, Railway, and a VPS. They use Postgres. After [the SQLite switch]({{< relref "/docs/operate/use-sqlite.md" >}}), skip `/worker` and keep the database file on a persistent volume.
 
 ```
            HTTPS proxy
@@ -29,16 +29,18 @@ Complete this once for any host. Variable names are on [Configuration]({{< relre
 | Variable | Required value |
 | --- | --- |
 | `APP_ENV` | any value other than `local` |
-| `JWT_SECRET` | at least 32 random bytes |
+| `JWT_SECRET` | at least 32 random bytes; the server refuses to start without it outside `local` |
 | `DATABASE_URL` | the production database |
 | `APP_BASE_URL` | the public API origin |
 | `STORAGE_SIGNING_KEY` | at least 32 random bytes when you keep disk storage |
 | Stripe and SMTP | set for the features you use |
 | `WEBHOOK_ALLOW_INSECURE` | do not set |
 
-8. Put HTTPS in front of the API. When exactly one proxy appends to `X-Forwarded-For`, set `TRUST_PROXY=true` so rate limits see the client address.
-9. When the API and the worker do not share a disk, switch file storage to S3 before you deploy. See [Store files in S3]({{< relref "/docs/files/store-files-in-s3.md" >}}). Disk storage needs one host and a volume both processes mount.
-10. Confirm `GET /healthz` and `GET /readyz` after deploy. Health and readiness details are on the [API]({{< relref "/docs/reference/api.md" >}}) page. The worker runs the job queue; the API does not. See [Jobs]({{< relref "/docs/reference/jobs.md" >}}).
+Then:
+
+1. Put HTTPS in front of the API. When exactly one proxy appends to `X-Forwarded-For`, set `TRUST_PROXY=true` so rate limits see the client address.
+2. When the API and the worker do not share a disk, switch file storage to S3 before you deploy. See [Store files in S3]({{< relref "/docs/files/store-files-in-s3.md" >}}). Disk storage needs one host and a volume both processes mount.
+3. Confirm `GET /healthz` and `GET /readyz` after deploy. Health and readiness details are on the [API]({{< relref "/docs/reference/api.md" >}}) page. The worker runs the job queue; the API does not. See [Jobs]({{< relref "/docs/reference/jobs.md" >}}).
 
 ## Build and run the image
 

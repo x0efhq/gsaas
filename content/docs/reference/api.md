@@ -44,7 +44,8 @@ A route marked user rejects an API key. A route marked user or API key accepts e
 | Condition | Status |
 | --- | --- |
 | No caller | 401 |
-| Not a member of the org | 403 or 404 |
+| Not a member of the org | 403 |
+| Path id for an object in another org | 404 |
 | Missing permission | 403 |
 | Plan required and not met | 402 |
 
