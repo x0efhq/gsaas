@@ -27,12 +27,12 @@ After [the SQLite switch]({{< relref "use-sqlite" >}}), one API process owns the
 
 ## Back up Postgres
 
-Take a logical backup of the database the API uses, for example with `pg_dump` against `DATABASE_URL`. Schedule it on the host or with your provider's backup feature. Restore with your provider's procedure or `psql` on a fresh database, then point `DATABASE_URL` at it and run `/migrate up` if the restore is empty.
+Take a logical backup of the database the API uses, for example with `pg_dump` against `DATABASE_URL`. Schedule it on the host or with your provider's backup feature. Restore with your provider's procedure or `psql` into a fresh database, then point `DATABASE_URL` at it.
 
 If uploads stay in `STORAGE_DIR`, copy that directory on the same schedule. If you use S3, rely on the bucket's versioning or replication instead.
 
 ## Back up SQLite
 
-Stop the API, or copy the main file and its sidecar files together while traffic is off. SQLite writes `app.db-wal` and `app.db-shm` beside `DATABASE_URL`. Back up all three files as one set. See [How to use SQLite]({{< relref "use-sqlite" >}}).
+Stop the API before you copy the database. SQLite runs in WAL mode, so it writes `app.db-wal` and `app.db-shm` beside the file in `DATABASE_URL`. Copy all three files together. See [How to use SQLite]({{< relref "use-sqlite" >}}).
 
 Copy the `uploads` volume or `STORAGE_DIR` with the database when files are not in S3.
