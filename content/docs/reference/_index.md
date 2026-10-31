@@ -14,3 +14,4 @@ Facts about the running API and its settings.
 - [Jobs]({{< relref "jobs" >}})
 - [Webhooks]({{< relref "webhooks" >}})
 - [Platform admin]({{< relref "platform-admin" >}})
+- [Billing]({{< relref "billing" >}})

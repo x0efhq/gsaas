@@ -16,6 +16,7 @@ Task pages for a repository you can already run. Each one starts from a goal and
 - [How to charge an organization]({{< relref "charge-an-organization" >}})
 - [How to gate a feature by plan]({{< relref "gate-a-feature-by-plan" >}})
 - [How to deploy]({{< relref "deploy" >}})
+- [How to scale and back up]({{< relref "scale-and-back-up" >}})
 - [How to accept an emailed link]({{< relref "accept-an-emailed-link" >}})
 - [How to add a migration]({{< relref "add-a-migration" >}})
 - [How to add an email]({{< relref "add-an-email" >}})
