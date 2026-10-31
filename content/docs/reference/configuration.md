@@ -27,6 +27,7 @@ Settings are environment variables, read by `platform/config/config.go`. A varia
 | `API_RATE_LIMIT` | `300` | Authenticated requests per minute |
 | `AUTH_RATE_LIMIT` | `10` | Public auth requests per minute per IP |
 | `TRUST_PROXY` | `false` | When `true`, the client IP is the right-most `X-Forwarded-For` entry |
+| `OTLP_ENDPOINT` | empty | OTLP/HTTP base URL for traces and metrics. Empty disables export |
 
 Set `TRUST_PROXY` only when one proxy appends that header. Further-left entries are ignored.
 
@@ -48,6 +49,11 @@ Set `TRUST_PROXY` only when one proxy appends that header. Further-left entries 
 | `MAGIC_LINK_TTL` | `15m` | Magic-link lifetime |
 | `MAGIC_LINK_HOURLY_LIMIT` | `5` | Magic-link requests recorded per address per hour |
 | `INVITE_TTL` | `168h` | Invite lifetime |
+| `OAUTH_CALLBACK_PATH` | `/auth/oauth/callback` | Frontend path that receives `?code=` after OAuth |
+| `GOOGLE_CLIENT_ID` | empty | Google OAuth client id. Empty disables Google (`503` on start) |
+| `GOOGLE_CLIENT_SECRET` | empty | Google OAuth client secret |
+| `GITHUB_CLIENT_ID` | empty | GitHub OAuth client id. Empty disables GitHub (`503` on start) |
+| `GITHUB_CLIENT_SECRET` | empty | GitHub OAuth client secret |
 
 Outside `APP_ENV=local`, startup fails unless `JWT_SECRET` is at least 32 random bytes. Responses then include `Strict-Transport-Security`.
 
@@ -104,6 +110,7 @@ S3 has no settings until you switch the code. See [How to store files in S3]({{<
 | `WEBHOOK_MAX_ENDPOINTS` | `20` | Endpoints one organization may register |
 | `WEBHOOK_ALLOW_INSECURE` | `false` | When `true`, customer endpoints may use HTTP. Local only |
 | `WORKER_SHUTDOWN_TIMEOUT` | `10s` | How long a stopping worker waits for a job |
+| `WORKER_HEARTBEAT_MAX_AGE` | `90s` | `/readyz` sets `worker_ok` false when the worker last heartbeat is older than this |
 
 ## Seed
 

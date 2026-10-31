@@ -26,7 +26,17 @@ An organization may register `WEBHOOK_MAX_ENDPOINTS` endpoints (default 20). The
 }
 ```
 
-Events shipped with the repository: `project.created`, `org.member.added`.
+Events shipped with the repository:
+
+| `type` | `data` fields |
+| --- | --- |
+| `project.created` | `id`, `org_id`, `name` |
+| `org.member.added` | `org_id`, `user_id`, `role` |
+| `org.member.removed` | `org_id`, `user_id` |
+| `org.member.role.changed` | `org_id`, `user_id`, `role`, `previous_role` |
+| `subscription.changed` | `org_id`, `status` |
+
+Register the event names you want on the endpoint's `events` array.
 
 ## Signature
 

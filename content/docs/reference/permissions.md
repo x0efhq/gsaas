@@ -26,6 +26,7 @@ No caller returns 401. A caller who lacks the permission returns 403.
 | Change roles, remove members | | | ✓ | ✓ |
 | Manage API keys | | | ✓ | ✓ |
 | Manage webhooks | | | ✓ | ✓ |
+| List audit log (`audit:read`) | | | ✓ | ✓ |
 | Delete the org | | | | ✓ |
 
 Billing, deleting the org, invites, API keys, and leaving also require a signed-in user.

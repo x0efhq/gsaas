@@ -44,7 +44,7 @@ The organization is not taken from the request body. A caller who is not a membe
 | Prefix | Caller |
 | --- | --- |
 | `GET /healthz`, `GET /readyz` | none |
-| `/auth` | none; rate limited per IP |
+| `/auth` | none; rate limited per IP. Includes OAuth at `/auth/oauth/{provider}` and `POST /auth/oauth/exchange` |
 | `POST /invites/accept` | none; rate limited per IP |
 | `/me` | user |
 | `GET /users`, `GET /users/{id}`, `PATCH /users/{id}` for a user other than the caller | user with `platform:users:list` or `platform:users:manage` |
@@ -53,6 +53,7 @@ The organization is not taken from the request body. A caller who is not a membe
 | `/organizations/{orgID}` | user or API key; tenant |
 | `/organizations/{orgID}/billing` | user; tenant |
 | `/organizations/{orgID}/webhooks` | user or API key; tenant |
+| `GET /organizations/{orgID}/audit-logs` | user or API key; tenant; `audit:read` |
 | `/projects` | user or API key; tenant; `X-Org-ID` |
 | `/jobs` | user or API key; tenant; `X-Org-ID` |
 | `GET /admin/stats` | user with `platform:stats` |
@@ -73,3 +74,24 @@ List requests take `starting_after`. `has_more` is true when another page exists
 Authenticated routes are limited per minute by `API_RATE_LIMIT` (default 300). The counter is the API key, otherwise the user, otherwise the client IP. Public `/auth` and `POST /invites/accept` are limited per minute per IP by `AUTH_RATE_LIMIT`.
 
 A request over the limit receives 429 and a `Retry-After` header.
+
+## Readiness
+
+`GET /readyz` pings the database. It returns 503 when the database is unreachable.
+
+When the app has a worker health store, the JSON body includes `worker_ok`. It is `false` when no worker has heartbeated within `WORKER_HEARTBEAT_MAX_AGE` (default 90s). The response stays 200 and the server logs a warning.
+
+## OAuth
+
+| Route | Meaning |
+| --- | --- |
+| `GET /auth/oauth/{provider}` | Start OAuth. `provider` is `google` or `github`. Redirects to the provider, or 503 when that provider's credentials are unset |
+| `GET /auth/oauth/{provider}/callback` | Provider redirect target. Redirects to the frontend with `?code=` or `?error=` |
+| `GET /auth/oauth/callback` | No-frontend fallback: HTML page with the code and exchange instructions |
+| `POST /auth/oauth/exchange` | JSON body `{"code":"…"}`. Returns the same token object as sign-in |
+
+See [How to sign in with Google or GitHub OAuth]({{< relref "../how-to/sign-in-with-oauth.md" >}}).
+
+## Organization API keys
+
+`POST /organizations/{orgID}/api-keys` accepts optional `expires_at` (RFC3339). When set, it must be in the future. The key stops working at that time, like a revoked key. List and get responses include `expires_at` when set.
