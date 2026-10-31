@@ -35,7 +35,7 @@ The `action` string is the bus event name. The `data` object matches the event p
 | `org.member.role.changed` | true | Role changed |
 | `org.api_key.created` | true | API key created |
 | `org.api_key.revoked` | true | API key revoked |
-| `org.api_key.auth_failed` | false | Existing key rejected (revoked, expired, or wrong org) |
+| `org.api_key.auth_failed` | false | Existing key rejected (revoked, expired, or its organization was deleted) |
 | `subscription.changed` | true | Stripe subscription status changed |
 | `checkout.started` | true | Checkout session started |
 | `auth.permission_denied` | false | Caller lacked a required permission |
