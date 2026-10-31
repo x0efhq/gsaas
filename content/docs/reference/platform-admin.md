@@ -1,12 +1,12 @@
 ---
-title: Platform admin
+title: Platform admin (your own staff)
 weight: 97
 aliases:
   - /docs/admin/
   - /docs/services/admin/
 ---
 
-# Platform admin
+# Platform admin (your own staff)
 
 A platform admin operates the installation. The flag `is_platform_admin` adds platform permissions to that user's session. Organization roles and API keys never grant them. See [Permissions]({{< relref "permissions" >}}).
 

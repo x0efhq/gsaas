@@ -1,5 +1,5 @@
 ---
-title: How to run the tests
+title: Run the tests
 weight: 24
 aliases:
   - /docs/testing/
@@ -7,7 +7,7 @@ aliases:
   - /docs/how-to/run-the-tests/
 ---
 
-# How to run the tests
+# Run the tests
 
 From the repository root, run:
 
@@ -19,13 +19,11 @@ make check
 
 The command exits 0 when every step passes. A formatting failure prints the paths. A stale `database/*/sqlc` tells you to run `make sqlc-gen`.
 
-To run one package:
-
-```bash
-go test ./projects/
-```
-
-`make test` runs `go test ./...` and skips the format, vet, and sqlc steps.
+| Command | What it runs |
+| --- | --- |
+| `make check` | format, vet, `go test ./...`, sqlc diff |
+| `make test` | `go test ./...` only |
+| `go test ./projects/` | one package |
 
 Module tests use the in-memory stores in each `mem.go`. They do not need Postgres. SQLite store tests always run, each on a temporary file. Postgres store tests under `database/postgres` run only when `TEST_DATABASE_URL` is set. Point it at a disposable database. Those tests write to it. Do not point it at the database the API is using.
 
@@ -41,4 +39,8 @@ make check
 
 Run the migrate line again after you change a migration.
 
-`app/imports_test.go` fails when a package imports across the boundary. See [Why this shape]({{< relref "/docs/getting-started/why-this-shape.md" >}}). `app/isolation_test.go` fails when a tenant route is not covered. `app/openapi_test.go` fails when a mounted route is missing from `app/openapi.yaml`.
+| Test | Fails when |
+| --- | --- |
+| `app/imports_test.go` | a package imports across the boundary (see [Why the code is laid out this way]({{< relref "/docs/getting-started/why-this-shape.md" >}})) |
+| `app/isolation_test.go` | a tenant route has no cross-tenant case |
+| `app/openapi_test.go` | a mounted route is missing from `app/openapi.yaml` |

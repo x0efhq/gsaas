@@ -1,5 +1,5 @@
 ---
-title: How to send an email
+title: Send an email
 weight: 52
 aliases:
   - /docs/email/
@@ -7,7 +7,11 @@ aliases:
   - /docs/how-to/add-an-email/
 ---
 
-# How to send an email
+# Send an email
+
+```
+module publishes event → app/subscribe.go renders → email.send job → worker → SMTP or log
+```
 
 Modules do not send mail. They publish an event. A handler in `app/subscribe.go` renders a template and queues it as an `email.send` job. The worker sends it. Retries and system-job rules are on the [Jobs]({{< relref "/docs/reference/jobs.md" >}}) page.
 

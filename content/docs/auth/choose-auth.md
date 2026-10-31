@@ -1,28 +1,31 @@
 ---
-title: How to choose local or Supabase auth
+title: Use built-in sign-in or Supabase Auth
 weight: 31
 aliases:
   - /docs/how-to/choose-auth/
 ---
 
-# How to choose local or Supabase auth
+# Use built-in sign-in or Supabase Auth
 
-Use one mode. API keys, organizations, and invites behave the same in both. See [Why this shape]({{< relref "/docs/getting-started/why-this-shape.md" >}}) for why the switch is an edit in `app.New`.
+Use one mode. API keys, organizations, and invites behave the same in both. See [Why the code is laid out this way]({{< relref "/docs/getting-started/why-this-shape.md" >}}) for why the switch is an edit in `app.New`.
 
-Use local auth when gsaas should sign users up and in. That is the default. You change nothing. Passwords and magic links are mounted at `/auth`.
+Use built-in sign-in when gsaas should sign users up and in. That is the default. You change nothing. Passwords and magic links are mounted at `/auth`.
 
 Use Supabase when the frontend already signs users in with Supabase Auth. gsaas then checks those tokens.
 
 To switch to Supabase, edit `app.New` in `app/app.go`. Replace this line:
 
 ```go
-sessions, stopAuth, err := localSessions(idSvc)
+sessions := auth.Verifier(idSvc)
 ```
 
-with this line, using your project URL:
+with this, using your project URL (import `gsaas/adapters/supabase`):
 
 ```go
-sessions, stopAuth, err := supabaseSessions(ctx, idSvc, "https://your-project.supabase.co")
+sessions, err := supabase.New(ctx, idSvc, "https://your-project.supabase.co")
+if err != nil {
+	return nil, err
+}
 ```
 
 gsaas then verifies Supabase tokens against the project's JWKS.

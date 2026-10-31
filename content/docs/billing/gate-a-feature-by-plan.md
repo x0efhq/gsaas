@@ -1,22 +1,22 @@
 ---
-title: How to gate a feature by plan
+title: Gate a feature by plan
 weight: 42
 aliases:
   - /docs/how-to/gate-a-feature-by-plan/
 ---
 
-# How to gate a feature by plan
+# Gate a feature by plan
 
 Refuse a feature unless the organization has an active or trialing Pro subscription. Set `STRIPE_PRICE_PRO` first. An empty price makes the check return 503.
 
-`GET /projects/{id}/report` is the example. It returns the project, and the other project routes stay open. Copy its middleware, then delete the route when you no longer need the sample.
+`GET /projects/{id}/report` is the example. It returns the project, and the other project routes stay open. Copy its middleware. Coverage for the middleware is in `billing/gate_test.go` (`TestRequirePlan`).
 
 ## Gate a route
 
 In `router` in `app/app.go`, mount the route after `tenant`:
 
 ```go
-r.With(authed, tenant, billingHandler.RequirePlan(billing.PlanPro), guard.RequirePerm(projects.PermRead)).
+r.With(authed, tenant, s.billing.RequirePlan(billing.PlanPro), s.guard.RequirePerm(projects.PermRead)).
 	Get("/projects/{id}/report", projectHandler.Get)
 ```
 

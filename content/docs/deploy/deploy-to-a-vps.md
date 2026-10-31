@@ -1,13 +1,13 @@
 ---
-title: How to deploy to a VPS with Docker Compose
+title: Deploy to a VPS with Docker Compose
 weight: 84
 aliases:
   - /docs/how-to/deploy-to-a-vps/
 ---
 
-# How to deploy to a VPS with Docker Compose
+# Deploy to a VPS with Docker Compose
 
-Run the database, migrations, API, worker, and a TLS proxy with the repository's `docker-compose.yaml`. Complete the [Deploy]({{< relref "/docs/deploy/" >}}) production checklist first. These steps use Postgres. After [the SQLite switch]({{< relref "/docs/operate/use-sqlite.md" >}}), leave out `POSTGRES_PASSWORD` and the `postgres` and `worker` services.
+Follow the topology diagram on [Deploy]({{< relref "/docs/deploy/" >}}). Run the database, migrations, API, worker, and a TLS proxy with the repository's `docker-compose.yaml`. Complete that production checklist first. These steps use Postgres. After [the SQLite switch]({{< relref "/docs/operate/use-sqlite.md" >}}), leave out `POSTGRES_PASSWORD` and the `postgres` and `worker` services.
 
 1. Install Docker Engine and the Compose plugin on the server.
 2. Point an `A` record for `api.example.com` at the server.
@@ -71,6 +71,6 @@ Run the database, migrations, API, worker, and a TLS proxy with the repository's
 
 To ship a new version, pull the code, update `VERSION`, and run step 6 again.
 
-Uploaded files stay in the `uploads` volume, which the API and the worker share. Back it up with the database. See [How to scale and back up]({{< relref "/docs/operate/scale-and-back-up.md" >}}).
+Uploaded files stay in the `uploads` volume, which the API and the worker share. Back it up with the database. See [Scale and back up the database]({{< relref "/docs/operate/scale-and-back-up.md" >}}).
 
 Postgres reads `POSTGRES_PASSWORD` only when it creates the `pgdata` volume. An existing volume keeps its old password. To change it, run `ALTER USER app PASSWORD '<new password>';` in the database, then update `.env`.

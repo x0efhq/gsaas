@@ -99,7 +99,7 @@ An empty `FRONTEND_BASE_URL` means links use `APP_BASE_URL`.
 
 Files live in `STORAGE_DIR` under `public/` and `private/`. The API serves them at `/storage/{visibility}/{key}`. Upload and private download URLs carry `exp` and `sig`. Public files need no signature. Outside `APP_ENV=local`, startup fails unless `STORAGE_SIGNING_KEY` is at least 32 random bytes. The API and the worker must share `STORAGE_DIR`. Production shared-disk and S3 rules are on the [Deploy]({{< relref "/docs/deploy/" >}}) checklist.
 
-S3 has no settings until you switch the code. See [How to store files in S3]({{< relref "/docs/files/store-files-in-s3.md" >}}).
+S3 has no settings until you switch the code. See [Store files in S3]({{< relref "/docs/files/store-files-in-s3.md" >}}).
 
 ## Webhooks and worker
 

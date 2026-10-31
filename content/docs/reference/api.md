@@ -17,7 +17,7 @@ The running server publishes the full description of every route.
 
 On a local server those paths are `http://localhost:5000/docs` and `http://localhost:5000/openapi.yaml`.
 
-## Authentication
+## Authentication and tenant
 
 Send `Authorization: Bearer <token>` on every route that requires a caller.
 
@@ -26,18 +26,28 @@ Send `Authorization: Bearer <token>` on every route that requires a caller.
 | Session access token | Signed JWT from sign-in or refresh |
 | Organization API key | Prefixed `ak_` |
 
-A route marked user rejects an API key. A route marked user or API key accepts either.
+```
+user session ─▶ member of many orgs ─▶ picks one via /organizations/{orgID} or X-Org-ID
+API key       ─▶ bound to one org (no choice)
+platform admin ─▶ platform:* perms on session only
+```
 
-## Tenant
-
-Routes whose prefix is in `tenantPrefixes` act on one organization.
+Routes whose prefix is in `tenantPrefixes` act on one organization. The organization is not taken from the request body.
 
 | How the org is chosen | When |
 | --- | --- |
 | `{orgID}` in the path | The path contains an organization id |
 | `X-Org-ID` header | The path has no organization id |
 
-The organization is not taken from the request body. A caller who is not a member of that organization receives 403. A path id for an object in another organization receives 404.
+A route marked user rejects an API key. A route marked user or API key accepts either.
+
+| Condition | Status |
+| --- | --- |
+| No caller | 401 |
+| Not a member of the org | 403 |
+| Path id for an object in another org | 404 |
+| Missing permission | 403 |
+| Plan required and not met | 402 |
 
 ## Route groups
 
@@ -92,7 +102,7 @@ When the app has a worker health store, the JSON body includes `worker_ok`. It i
 | `GET /auth/oauth/callback` | No-frontend fallback: HTML page with the code and exchange instructions |
 | `POST /auth/oauth/exchange` | JSON body `{"code":"…"}`. Returns the same token object as sign-in |
 
-See [How to sign in with Google or GitHub OAuth]({{< relref "/docs/auth/sign-in-with-oauth.md" >}}).
+See [Sign in with Google or GitHub OAuth]({{< relref "/docs/auth/sign-in-with-oauth.md" >}}).
 
 ## Organization API keys
 

@@ -1,13 +1,13 @@
 ---
-title: How to deploy to Railway
+title: Deploy to Railway
 weight: 83
 aliases:
   - /docs/how-to/deploy-to-railway/
 ---
 
-# How to deploy to Railway
+# Deploy to Railway
 
-Run the API and the worker as two Railway services built from the same repository. Complete the [Deploy]({{< relref "/docs/deploy/" >}}) production checklist first. These steps use Postgres.
+Follow the topology diagram on [Deploy]({{< relref "/docs/deploy/" >}}). Build the API and the worker as two Railway services from the same repository. Complete that production checklist first. These steps use Postgres.
 
 ## Add the database
 

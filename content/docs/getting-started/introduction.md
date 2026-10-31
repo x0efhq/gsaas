@@ -26,9 +26,9 @@ gsaas is a multi-tenant Go REST API you own: auth, teams, billing, jobs, and web
 ## Simplest path
 
 1. [Run the API and make a first call]({{< relref "first-call" >}}).
-2. [Add a module]({{< relref "/docs/build/add-a-module.md" >}}) for your feature, copying `projects/`.
-3. [Choose auth]({{< relref "/docs/auth/choose-auth.md" >}}) if you need Supabase instead of local sign-in.
-4. [Charge an organization]({{< relref "/docs/billing/charge-an-organization.md" >}}) when you sell a plan.
+2. [Add a feature]({{< relref "/docs/build/add-a-module.md" >}}), copying `projects/`.
+3. [Use built-in sign-in or Supabase Auth]({{< relref "/docs/auth/choose-auth.md" >}}) if you need Supabase.
+4. [Charge a customer with Stripe]({{< relref "/docs/billing/charge-an-organization.md" >}}) when you sell a plan.
 5. [Deploy]({{< relref "/docs/deploy/" >}}) with the production checklist, then a host page.
 
-Why packages and `app/` are split is on [Why the code is arranged this way]({{< relref "why-this-shape" >}}).
+Why packages and `app/` are split is on [Why the code is laid out this way]({{< relref "why-this-shape" >}}).

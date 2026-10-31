@@ -35,4 +35,4 @@ Without `STRIPE_SECRET_KEY`, the billing processor is disabled and billing route
 
 Set `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, the price ids you sell, and `FRONTEND_BASE_URL` for return URLs. Variable names and link paths are on [Configuration]({{< relref "configuration" >}}).
 
-To sell Pro subscriptions end to end, see [How to charge an organization]({{< relref "/docs/billing/charge-an-organization.md" >}}). To refuse a route unless the org is on Pro, see [How to gate a feature by plan]({{< relref "/docs/billing/gate-a-feature-by-plan.md" >}}).
+To sell Pro subscriptions end to end, see [Charge a customer with Stripe]({{< relref "/docs/billing/charge-an-organization.md" >}}). To refuse a route unless the org is on Pro, see [Gate a feature by plan]({{< relref "/docs/billing/gate-a-feature-by-plan.md" >}}).
