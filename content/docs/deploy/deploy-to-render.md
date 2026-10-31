@@ -1,13 +1,13 @@
 ---
-title: How to deploy to Render
+title: Deploy to Render
 weight: 82
 aliases:
   - /docs/how-to/deploy-to-render/
 ---
 
-# How to deploy to Render
+# Deploy to Render
 
-Define the API, the worker, and the database in one Blueprint. Complete the [Deploy]({{< relref "/docs/deploy/" >}}) production checklist first. These steps use Postgres.
+Follow the topology diagram on [Deploy]({{< relref "/docs/deploy/" >}}). Define the API, the worker, and the database in one Blueprint. Complete that production checklist first. These steps use Postgres.
 
 1. Create `render.yaml` in the repository root:
 

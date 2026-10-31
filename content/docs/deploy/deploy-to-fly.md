@@ -1,13 +1,13 @@
 ---
-title: How to deploy to Fly.io
+title: Deploy to Fly.io
 weight: 81
 aliases:
   - /docs/how-to/deploy-to-fly/
 ---
 
-# How to deploy to Fly.io
+# Deploy to Fly.io
 
-Run the API and the worker as two process groups in one Fly app. Complete the [Deploy]({{< relref "/docs/deploy/" >}}) production checklist first. These steps use Postgres.
+Follow the topology diagram on [Deploy]({{< relref "/docs/deploy/" >}}). Complete that production checklist first. These steps use Postgres.
 
 ## Create the app and the database
 

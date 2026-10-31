@@ -14,7 +14,7 @@ A non-2xx response, a timeout of 10 seconds, or a redirect is a failure and is r
 
 An organization may register `WEBHOOK_MAX_ENDPOINTS` endpoints (default 20). The create response includes `secret` once. List responses omit it.
 
-To add an event type, see [How to publish a webhook event]({{< relref "/docs/background/publish-a-webhook-event.md" >}}).
+To add an event type, see [Send a new webhook event to customers]({{< relref "/docs/background/publish-a-webhook-event.md" >}}).
 
 ## Body
 

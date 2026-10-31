@@ -1,5 +1,5 @@
 ---
-title: Why this shape
+title: Why the code is laid out this way
 weight: 13
 aliases:
   - /docs/architecture/
@@ -8,7 +8,7 @@ aliases:
   - /docs/explanation/why-this-shape/
 ---
 
-# Why this shape
+# Why the code is laid out this way
 
 gsaas is one Go program. Each feature is a package at the repository root, and `app/` is the only package that is allowed to know about all of them. That split is the whole layout.
 
@@ -29,36 +29,19 @@ gsaas/
 └── cmd/            server, worker, migrate, seed
 ```
 
-## One place wires the process
+```
+ cmd/* ──▶ app/ ──▶ identity, organization (core)
+             │ ──▶ billing, projects, files, webhooks, jobs, admin ──▶ platform/
+             │ ──▶ adapters/*   database/{postgres|sqlite}
+   features ✗──▶ other features      (app/imports_test.go)
+```
 
-A reader, or a coding agent, should be able to answer "what runs, and in what order" by opening `app/`. `New` constructs the services. `router` mounts the routes. `subscribe.go` attaches event handlers. `rbac.go` turns a member's role into permissions. `jobs()` names every background job.
+## Decisions
 
-If those connections were spread through the feature packages, adding a feature would mean hunting for the hidden call. Keeping them in `app/` makes a new feature a new package plus a few lines in that one place. The cost is that `app/` is large and boring. That cost is the point.
-
-## Features do not call each other
-
-A feature package does not import another feature package. `identity` and `organization` are the exception, and nothing imports them back in a cycle: they are the core, and they import no feature. When billing needs a user, `app/` passes in a small interface that billing defined.
-
-The rule is there so a change in one feature does not compile-break the others, and so an agent cannot quietly reach into a package it was not given. `app/imports_test.go` fails when a package crosses the line. Adapters (Stripe, S3, Supabase) sit behind that same wall: only `app/` imports them, so swapping a provider is a change in `app/`, not a change in the feature.
-
-The database follows the same rule. Each engine is one folder, `database/postgres` or `database/sqlite`, holding its migrations, queries, generated code, and every store. `app.New` builds one of them. The two share no code and no runtime switch. A project keeps one engine and deletes the other's folder, so the code that ships is the code that runs.
-
-## The organization comes from the caller
-
-Tenant data is filtered by the organization on the authenticated caller. Handlers do not trust an organization id in the JSON body. A member asks for an org in the path or in `X-Org-ID`, and `auth.Tenant` checks that they belong to it before the handler runs. An API key has no choice: it is already bound to one organization.
-
-This is ordinary application code, not Postgres row-level security. Row-level security would hide the same rule inside the database, where the tests in this repository cannot see it and a query written by mistake can still be wrong in a way the type system will not catch. The isolation tests call the service with two organizations and expect a 403 or a 404. How those status codes map to calls is on the [API]({{< relref "/docs/reference/api.md" >}}) page.
-
-## Permissions are not roles at the door
-
-Roles belong to an organization: owner, admin, member, viewer. The platform checks permissions. `app/rbac.go` is the table that maps a role to the permissions it grants. A route asks for a permission, not for a role, so a new route does not invent a new role.
-
-API keys hold permissions and no role. A person creating a key cannot grant a permission their own role lacks. Platform-admin permissions are not in any organization role. They are added to a platform admin's session, and they are never placed on an API key. See [Permissions]({{< relref "/docs/reference/permissions.md" >}}).
-
-## A code change, not a setting
-
-Auth mode and file storage are not environment switches. You change them in `app.New`. A saved file key exists only in the store that wrote it, so flipping a variable on a running deployment would orphan every stored file. Making the switch a code change keeps it deliberate. The same applies to Postgres versus SQLite. A future project generator will make that edit for you.
-
-## What this leaves out
-
-The layout does not include a frontend. Clients send a bearer token. It also does not try to make every feature optional at runtime. Stripe and SMTP turn off when their variables are empty. File storage defaults to the local disk. The packages are still in the binary. Removing a feature means not mounting it, which is again a change in `app/`.
+- **`app/` is the only package that wires everything.** You can read what runs, and in what order, in one place (`New`, `router`, `subscribe.go`, `rbac.go`, and the `jobList` in `New`).
+- **Feature packages do not import each other.** One feature cannot break another feature's build. `app/imports_test.go` enforces this. `identity` and `organization` are the core exception: they import no feature, and nothing imports them back in a cycle. When billing needs a user, `app/` passes in a small interface that billing defined.
+- **Adapters and database engines are imported only by `app/`.** Swapping Stripe, S3, or Postgres for SQLite is an `app/` edit. Each engine folder (`database/postgres` or `database/sqlite`) is self-contained, so you delete the one you do not use.
+- **The tenant comes from the caller, not the body.** A member asks for an org in the path or in `X-Org-ID`, and `auth.Tenant` checks membership. An API key is already bound to one organization. No RLS, because the isolation tests can see the rule in Go code. Status codes are on the [API]({{< relref "/docs/reference/api.md" >}}) page.
+- **Routes ask for permissions, not roles.** `app/rbac.go` is the role-to-permission table. See [Permissions]({{< relref "/docs/reference/permissions.md" >}}).
+- **Auth, storage, and DB engine are code changes.** Flipping a variable would orphan stored files. Making the switch a code change keeps it deliberate.
+- **Not included:** a frontend, or runtime feature toggles. Clients send a bearer token. Stripe and SMTP turn off when their variables are empty. File storage defaults to the local disk. You remove a feature by not mounting it in `app/`.

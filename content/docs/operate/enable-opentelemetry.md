@@ -1,16 +1,26 @@
 ---
-title: How to enable OpenTelemetry
+title: Export traces and metrics
 weight: 71
 aliases:
   - /docs/how-to/enable-opentelemetry/
 ---
 
-# How to enable OpenTelemetry
+# Export traces and metrics
 
-HTTP requests and background jobs emit traces and metrics when `OTLP_ENDPOINT` is set. An empty value keeps `telemetry.Noop` (the default).
+HTTP requests and background jobs emit traces and metrics when `OTLP_ENDPOINT` is set. An empty value keeps `telemetry.Noop` (the default). Code: `adapters/otel/`, `platform/telemetry/`.
 
-1. Run an OTLP/HTTP collector (port `4318` is common).
-2. Set `OTLP_ENDPOINT` to the collector base URL, for example `http://localhost:4318`.
+1. Run an OTLP/HTTP collector. Jaeger all-in-one is enough locally:
+
+```bash
+docker run --rm -p 16686:16686 -p 4318:4318 jaegertracing/all-in-one
+```
+
+2. Set the endpoint in `.env`:
+
+```sh
+OTLP_ENDPOINT=http://localhost:4318
+```
+
 3. Restart the API and the worker. Both call `app.New` and share the same setting.
 
 Traces and metrics export over OTLP/HTTP to that URL. The service name in telemetry is `APP_NAME`.
