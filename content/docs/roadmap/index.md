@@ -1,15 +1,15 @@
 ---
 title: Roadmap
-weight: 10
+weight: 100
 aliases:
   - /docs/services/roadmap/
 ---
 
 # Roadmap
 
-What's planned for gsaas next. Plans can change, and items aren't promised dates.
+What is planned for gsaas next. Plans can change. Items are not promised dates.
 
-**Getting updates:** new releases are pulled from the private repository with git.
+New releases come from the private repository with git.
 
 ## Shipped
 
@@ -19,12 +19,12 @@ What's planned for gsaas next. Plans can change, and items aren't promised dates
 - **API key** optional `expires_at` on create.
 - **Worker health** in `GET /readyz` (`worker_ok` when the heartbeat is stale).
 - **Webhook events** `org.member.removed`, `org.member.role.changed`, and `subscription.changed`.
+- **Email from background jobs** (`email.send`), so a mail outage does not fail the request that queued it.
 
 ## Coming soon
 
 - **Metrics:** a Prometheus `/metrics` endpoint and Stripe webhook metrics.
 - **Security:** structured validation errors.
-- **Email from background jobs**, so a mail outage never fails a request.
 - **Analytics:** request IDs on tracked events, and an HTTP analytics sink.
 - **Ops:** build version in logs, optional migrate-on-start for non-production environments, and a Stripe event replay command.
 - **Developer experience:** `make domain` to scaffold a new module, live reload, and integration tests.
