@@ -7,6 +7,18 @@ weight: 11
 
 gsaas is a multi-tenant Go REST API you own: auth, teams, billing, jobs, and webhooks, ready to extend.
 
+## TLDR
+
+gsaas is the backend for a SaaS: a Go API with sign-in, teams, billing and jobs already wired. Clone it, then run:
+
+```bash
+cp .env.example .env
+make seed
+make run
+```
+
+The API is up on port 5000. You own every file.
+
 ## What you get
 
 - Email and password sign-in, magic links, Google and GitHub OAuth, or Supabase Auth
@@ -32,3 +44,7 @@ gsaas is a multi-tenant Go REST API you own: auth, teams, billing, jobs, and web
 5. [Deploy]({{< relref "/docs/deploy/" >}}) with the production checklist, then a host page.
 
 Why packages and `app/` are split is on [Why the code is laid out this way]({{< relref "why-this-shape" >}}).
+
+## License
+
+A purchase on Gumroad gives you access to the private GitHub repository. One license covers one person or company, with unlimited developers on your team and unlimited products, including client work. You may not resell the code or publish it. The full terms are in `LICENSE` in the repository.
