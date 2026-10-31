@@ -16,9 +16,32 @@ Any S3-compatible store works: AWS S3, Cloudflare R2, Supabase Storage, or MinIO
 ## Change the code
 
 1. In `platform/config/config.go`, move the commented S3 fields into the `Config` struct, and the commented `r.string("S3_...")` lines into the `Load` literal.
-2. In `app.New` in `app/app.go`, replace the `storage.NewDisk` call with the commented `storage.NewS3` call, then pass `s3` to `files.New`. Remove the `/storage/` routes, `BodyLimitSkip`, and the `disk` field from `services` and from `app/isolation_test.go`.
-3. In `app/openapi.yaml`, delete the `/storage/{visibility}/{kind}/{owner}/{file}` path.
-4. In `platform/config/config.go`, delete `StorageDir`, `StorageSigningKey`, `devStorageSigningKey`, and the signing-key check in `Load`. Update `TestLoad_storage` in `platform/config/config_test.go`. Then run `go build ./... && go vet ./... && go test ./...`.
+
+2. In `app.New` in `app/app.go`, replace the `storage.NewDisk` call with the commented `storage.NewS3` call, then pass `s3` to `files.New`:
+
+   ```go
+   s3, err := storage.NewS3(ctx, storage.Options{
+   	Region:          cfg.S3Region,
+   	Endpoint:        cfg.S3Endpoint,
+   	PublicURL:       cfg.S3PublicURL,
+   	AccessKeyID:     cfg.S3AccessKeyID,
+   	SecretAccessKey: cfg.S3SecretAccessKey,
+   	PublicBucket:    cfg.S3PublicBucket,
+   	PrivateBucket:   cfg.S3PrivateBucket,
+   })
+   if err != nil {
+   	return nil, err
+   }
+   filesSvc := files.New(s3, clk, files.Config{Expires: cfg.FileExpires, MaxBytes: cfg.UploadMaxBytes})
+   ```
+
+3. In `router` in the same file, delete the two `/storage/` routes and the `BodyLimitSkip` option. Remove the `disk` field from `services` and from the `services` literal in `app.New`, and from the test fixture in `app/isolation_test.go`.
+
+4. In `app/openapi.yaml`, delete the `/storage/{visibility}/{kind}/{owner}/{file}` path. The OpenAPI test does not catch a documented path that has no route.
+
+5. In `platform/config/config.go`, delete `StorageDir`, `StorageSigningKey`, `devStorageSigningKey`, and the signing-key check in `Load`. If you keep the check, production still refuses to start without a 32-byte key.
+
+6. Update `TestLoad_storage` in `platform/config/config_test.go`. `TestStorage_s3` runs the shared suite against a real bucket when `TEST_S3_ENDPOINT` is set. Then run `go build ./... && go vet ./... && go test ./...`.
 
 ## Set the variables
 
