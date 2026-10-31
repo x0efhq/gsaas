@@ -60,3 +60,6 @@ a[href]:hover, a[role=button]:hover { opacity: 1; color: var(--body-font-color);
   :root[data-theme="auto"] a[href]:hover { color: var(--body-font-color); }
 }
 
+
+/* Theme fades nav links to 50% on hover; keep them fully bright. */
+nav ul a[href]:hover, nav ul a[role=button]:hover { opacity: 1; }
